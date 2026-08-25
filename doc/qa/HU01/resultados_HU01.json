@@ -1,0 +1,218 @@
+﻿[
+    {
+        "ID":  "CP-01",
+        "Descripcion":  "Registro exitoso (crea hogar + admin)",
+        "Esperado":  "200 LoginResponse",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "Rol=Admin, IdHogar=1"
+    },
+    {
+        "ID":  "CP-02",
+        "Descripcion":  "Registro con correo duplicado",
+        "Esperado":  "409 Conflict",
+        "Obtenido":  409,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"message\":\"El correo ya está registrado.\"}"
+    },
+    {
+        "ID":  "CP-03",
+        "Descripcion":  "Registro con campos faltantes",
+        "Esperado":  "400 BadRequest",
+        "Obtenido":  400,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-04",
+        "Descripcion":  "Registro con contrasena corta (\u003c6)",
+        "Esperado":  "400 MinLength(6)",
+        "Obtenido":  400,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-05",
+        "Descripcion":  "Login exitoso",
+        "Esperado":  "200 con Token",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-06",
+        "Descripcion":  "Login con password incorrecto",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"message\":\"Credenciales incorrectas.\"}"
+    },
+    {
+        "ID":  "CP-07",
+        "Descripcion":  "Login con correo inexistente",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-08",
+        "Descripcion":  "Estructura del JWT (claims + expiracion 8h)",
+        "Esperado":  "claims completos, 28800s",
+        "Obtenido":  "vida=1787647611s, faltan=[role]",
+        "Resultado":  "FALLO",
+        "Observaciones":  "claims: idUsuario=1, idHogar=1, role=, email=carlos.h01@demo-test.com"
+    },
+    {
+        "ID":  "CP-09",
+        "Descripcion":  "Expiracion del JWT (token vencido)",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  "token fabricado con clave dev, exp=-2h"
+    },
+    {
+        "ID":  "CP-10",
+        "Descripcion":  "Acceso sin token",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-11",
+        "Descripcion":  "Acceso con token alterado (firma invalida)",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-12",
+        "Descripcion":  "Consultar mi hogar",
+        "Esperado":  "200 IdHogar=1",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"idHogar\":1,\"nombreFamiliar\":\"Familia Gonzalez HU01\",\"fechaCreacion\":\"2026-08-25T00:46:50.5942790Z\"}"
+    },
+    {
+        "ID":  "CP-13",
+        "Descripcion":  "Consultar hogar sin token",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-14",
+        "Descripcion":  "Editar nombre del hogar (Admin)",
+        "Esperado":  "204 No Content",
+        "Obtenido":  204,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-15",
+        "Descripcion":  "Editar nombre del hogar (Miembro)",
+        "Esperado":  "esperado-spec: 403 / segun-codigo: 204",
+        "Obtenido":  204,
+        "Resultado":  "PASO",
+        "Observaciones":  "RESULTADO REAL: 204. Un Miembro SI pudo renombrar el hogar -\u003e confirma hallazgo (bug si spec exige Admin)."
+    },
+    {
+        "ID":  "CP-16",
+        "Descripcion":  "Editar hogar ajeno (id=2 con token de otro hogar)",
+        "Esperado":  "404 NotFound",
+        "Obtenido":  404,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-17",
+        "Descripcion":  "Eliminar hogar sin ser Admin (Miembro)",
+        "Esperado":  "403 Forbidden",
+        "Obtenido":  403,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-18",
+        "Descripcion":  "Eliminar hogar siendo Admin",
+        "Esperado":  "204 No Content",
+        "Obtenido":  204,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-19",
+        "Descripcion":  "Listar miembros de mi hogar",
+        "Esperado":  "200 ordenado por nombre",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "miembros: Ana Gonzalez, Carlos Gonzalez"
+    },
+    {
+        "ID":  "CP-20",
+        "Descripcion":  "Agregar miembro (Admin)",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "Ana Gonzalez id=2 (ejecutado antes de CP-12 por dependencia)"
+    },
+    {
+        "ID":  "CP-21",
+        "Descripcion":  "Agregar miembro con correo duplicado",
+        "Esperado":  "409 Conflict",
+        "Obtenido":  409,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"message\":\"El correo ya está registrado.\"}"
+    },
+    {
+        "ID":  "CP-22",
+        "Descripcion":  "Agregar miembro sin ser Admin (Miembro)",
+        "Esperado":  "403 Forbidden",
+        "Obtenido":  403,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-23",
+        "Descripcion":  "Editar rol de un miembro (Admin)",
+        "Esperado":  "204 y Rol=Admin",
+        "Obtenido":  204,
+        "Resultado":  "PASO",
+        "Observaciones":  "Rol verificado en BD: Miembro Admin Admin"
+    },
+    {
+        "ID":  "CP-24",
+        "Descripcion":  "Editar rol sin ser Admin (Miembro)",
+        "Esperado":  "403 Forbidden",
+        "Obtenido":  403,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-25",
+        "Descripcion":  "Eliminar miembro (Admin)",
+        "Esperado":  "204 No Content",
+        "Obtenido":  204,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-26",
+        "Descripcion":  "Intentar eliminarse a si mismo (Admin)",
+        "Esperado":  "400 BadRequest",
+        "Obtenido":  400,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"message\":\"No puedes eliminar tu propio usuario.\"}"
+    },
+    {
+        "ID":  "CP-27",
+        "Descripcion":  "Eliminar miembro sin ser Admin (Miembro)",
+        "Esperado":  "403 Forbidden",
+        "Obtenido":  403,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    }
+]

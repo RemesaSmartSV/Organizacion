@@ -1,0 +1,132 @@
+=== Ejecucion HU-01 2026-08-24T18:46:49 ===
+POST /api/Auth/register -> 200
+ReqBody: {"nombreFamiliar":"Familia Gonzalez HU01","contrasena":"Demo1234!","nombre":"Carlos Gonzalez","correo":"carlos.h01@demo-test.com"}
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiIxIiwiaWRIb2dhciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImVtYWlsIjoiY2FybG9zLmgwMUBkZW1vLXRlc3QuY29tIiwiZXhwIjoxNzg3NjQ3NjExLCJpc3MiOiJSZW1lc2FTbWFydFNWIiwiYXVkIjoiUmVtZXNhU21hcnRTVkNsaWVudCJ9.P_D2_IUmzTlImk7RSHSAN2h-HD1JoKCRJ_eAh5OtMzg","idUsuario":1,"nombre":"Carlos Gonzalez","correo":"carlos.h01@demo-test.com","rol":"Admin","idHogar":1}
+
+POST /api/Auth/register -> 409
+ReqBody: {"nombreFamiliar":"Otra Familia","contrasena":"OtraClave1!","nombre":"Carlos Duplicado","correo":"carlos.h01@demo-test.com"}
+RespBody: {"message":"El correo ya está registrado."}
+
+POST /api/Auth/register -> 400
+ReqBody: {"nombre":"Sin Correo Ni Clave","nombreFamiliar":"Familia X"}
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"Correo":["The Correo field is required."],"Contrasena":["The Contrasena field is required."]},"traceId":"00-acd37273def56e145bdea7ea70b4da4d-6933fad2d6bc3929-00"}
+
+POST /api/Auth/register -> 400
+ReqBody: {"nombreFamiliar":"Familia Y","contrasena":"123","nombre":"Clave Corta","correo":"corta.h01@demo-test.com"}
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"Contrasena":["The field Contrasena must be a string or array type with a minimum length of '6'."]},"traceId":"00-4fe6829f9d2cd9842cf210c5ca1ffa85-83d8d83361f54d05-00"}
+
+POST /api/Auth/login -> 200
+ReqBody: {"contrasena":"Demo1234!","correo":"carlos.h01@demo-test.com"}
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiIxIiwiaWRIb2dhciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImVtYWlsIjoiY2FybG9zLmgwMUBkZW1vLXRlc3QuY29tIiwiZXhwIjoxNzg3NjQ3NjExLCJpc3MiOiJSZW1lc2FTbWFydFNWIiwiYXVkIjoiUmVtZXNhU21hcnRTVkNsaWVudCJ9.P_D2_IUmzTlImk7RSHSAN2h-HD1JoKCRJ_eAh5OtMzg","idUsuario":1,"nombre":"Carlos Gonzalez","correo":"carlos.h01@demo-test.com","rol":"Admin","idHogar":1}
+
+POST /api/Auth/login -> 401
+ReqBody: {"contrasena":"PasswordMala","correo":"carlos.h01@demo-test.com"}
+RespBody: {"message":"Credenciales incorrectas."}
+
+POST /api/Auth/login -> 401
+ReqBody: {"contrasena":"Demo1234!","correo":"nadie.h01@demo-test.com"}
+RespBody: {"message":"Credenciales incorrectas."}
+
+GET /api/Hogares -> 401
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
+GET /api/Hogares -> 401
+
+GET /api/Hogares -> 401
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
+POST /api/Usuarios -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"contrasena":"Demo1234!","nombre":"Ana Gonzalez","rol":"Miembro","correo":"ana.h01@demo-test.com"}
+RespBody: {"idUsuario":2,"idHogar":1,"nombre":"Ana Gonzalez","correo":"ana.h01@demo-test.com","rol":"Miembro","fechaRegistro":"2026-08-25T00:46:51.9061485Z"}
+
+POST /api/Auth/login -> 200
+ReqBody: {"contrasena":"Demo1234!","correo":"ana.h01@demo-test.com"}
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiIyIiwiaWRIb2dhciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNaWVtYnJvIiwiZW1haWwiOiJhbmEuaDAxQGRlbW8tdGVzdC5jb20iLCJleHAiOjE3ODc2NDc2MTIsImlzcyI6IlJlbWVzYVNtYXJ0U1YiLCJhdWQiOiJSZW1lc2FTbWFydFNWQ2xpZW50In0.nSfv3ezdsgPih8WnXj5ui7xryuBBcH5lhnkYTYKwxUQ","idUsuario":2,"nombre":"Ana Gonzalez","correo":"ana.h01@demo-test.com","rol":"Miembro","idHogar":1}
+
+GET /api/Hogares -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"idHogar":1,"nombreFamiliar":"Familia Gonzalez HU01","fechaCreacion":"2026-08-25T00:46:50.5942790Z"}
+
+GET /api/Hogares -> 401
+
+PUT /api/Hogares/1 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"nombreFamiliar":"Familia Gonzalez Perez"}
+
+GET /api/Hogares -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"idHogar":1,"nombreFamiliar":"Familia Gonzalez Perez","fechaCreacion":"2026-08-25T00:46:50.5942790Z"}
+
+PUT /api/Hogares/1 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"nombreFamiliar":"Renombrado Por Miembro"}
+
+PUT /api/Hogares/1 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"nombreFamiliar":"Familia Gonzalez Perez"}
+
+POST /api/Auth/register -> 200
+ReqBody: {"nombreFamiliar":"Familia Martinez HU01","contrasena":"Demo1234!","nombre":"Marta Martinez","correo":"marta.h01@demo-test.com"}
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiIzIiwiaWRIb2dhciI6IjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImVtYWlsIjoibWFydGEuaDAxQGRlbW8tdGVzdC5jb20iLCJleHAiOjE3ODc2NDc2MTIsImlzcyI6IlJlbWVzYVNtYXJ0U1YiLCJhdWQiOiJSZW1lc2FTbWFydFNWQ2xpZW50In0.5QvDWJn5Y7bcltqnnf0wk4Oob7rYbtGiyKNzYo9-pDA","idUsuario":3,"nombre":"Marta Martinez","correo":"marta.h01@demo-test.com","rol":"Admin","idHogar":2}
+
+PUT /api/Hogares/2 -> 404
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"nombreFamiliar":"Hackeo"}
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-5cf9cfb943bc9ff6f5be7ca5e6277f5a-50af1a95443db454-00"}
+
+DELETE /api/Hogares/1 -> 403
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
+DELETE /api/Hogares/2 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
+GET /api/Usuarios -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: [{"idUsuario":2,"idHogar":1,"nombre":"Ana Gonzalez","correo":"ana.h01@demo-test.com","rol":"Miembro","fechaRegistro":"2026-08-25T00:46:51.9061480Z"},{"idUsuario":1,"idHogar":1,"nombre":"Carlos Gonzalez","correo":"carlos.h01@demo-test.com","rol":"Admin","fechaRegistro":"2026-08-25T00:46:50.8912770Z"}]
+
+POST /api/Usuarios -> 409
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"contrasena":"Demo1234!","nombre":"Ana Duplicada","correo":"ana.h01@demo-test.com"}
+RespBody: {"message":"El correo ya está registrado."}
+
+POST /api/Usuarios -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"contrasena":"Demo1234!","nombre":"Luis Gonzalez","rol":"Miembro","correo":"luis.h01@demo-test.com"}
+RespBody: {"idUsuario":4,"idHogar":1,"nombre":"Luis Gonzalez","correo":"luis.h01@demo-test.com","rol":"Miembro","fechaRegistro":"2026-08-25T00:46:52.5853952Z"}
+
+POST /api/Usuarios -> 403
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"contrasena":"Demo1234!","nombre":"Intruso","correo":"intruso.h01@demo-test.com"}
+
+PUT /api/Usuarios/4 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"rol":"Admin"}
+
+GET /api/Usuarios -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: [{"idUsuario":2,"idHogar":1,"nombre":"Ana Gonzalez","correo":"ana.h01@demo-test.com","rol":"Miembro","fechaRegistro":"2026-08-25T00:46:51.9061480Z"},{"idUsuario":1,"idHogar":1,"nombre":"Carlos Gonzalez","correo":"carlos.h01@demo-test.com","rol":"Admin","fechaRegistro":"2026-08-25T00:46:50.8912770Z"},{"idUsuario":4,"idHogar":1,"nombre":"Luis Gonzalez","correo":"luis.h01@demo-test.com","rol":"Admin","fechaRegistro":"2026-08-25T00:46:52.5853950Z"}]
+
+PUT /api/Usuarios/4 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"rol":"Miembro"}
+
+PUT /api/Usuarios/4 -> 403
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"rol":"Admin"}
+
+POST /api/Usuarios -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"contrasena":"Demo1234!","nombre":"Temporal Borrar","correo":"temp.h01@demo-test.com"}
+RespBody: {"idUsuario":5,"idHogar":1,"nombre":"Temporal Borrar","correo":"temp.h01@demo-test.com","rol":"Miembro","fechaRegistro":"2026-08-25T00:46:52.9432451Z"}
+
+DELETE /api/Usuarios/5 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
+DELETE /api/Usuarios/1 -> 400
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"message":"No puedes eliminar tu propio usuario."}
+
+DELETE /api/Usuarios/4 -> 403
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
