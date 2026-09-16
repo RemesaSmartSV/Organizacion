@@ -1,7 +1,7 @@
 # Reporte de Pruebas — RemesaSmartSV
 
-**Fecha:** 15 de septiembre de 2026  
-**Proyecto:** RemesaSmartSV — Aplicación de finanzas familiares y remesas  
+**Fecha:** 16 de septiembre de 2026
+**Proyecto:** RemesaSmartSV — Aplicación de finanzas familiares y remesas
 **Responsable:** Emelie López (documentación) / Branham Alabi (ejecución)
 
 ---
@@ -10,9 +10,13 @@
 
 | Componente | Framework | Tests | Pasaron | Fallaron | Estado |
 |---|---|---|---|---|---|
-| Backend (xUnit) | xUnit + EF Core InMemory | 21 | 21 | 0 | ✅ |
-| Frontend (Vitest) | Vitest + React Testing Library | 2 | 2 | 0 | ✅ |
-| **Total** | | **23** | **23** | **0** | **✅** |
+| Backend (xUnit) | xUnit 2.9.3 + EF Core InMemory | 52 | 52 | 0 | ✅ |
+| Frontend (Vitest) | Vitest + React Testing Library | — | — | — | ⏸️ Pendiente (Node no instalado) |
+| **Total** | | **52** | **52** | **0** | **✅** |
+
+> **Nota:** los tests de frontend (Vitest) no se ejecutaron en esta corrida porque
+> Node.js no está instalado en el entorno. El reporte anterior registró 2 casos de
+> `App.test.jsx` (renderizado y título). Quedan pendientes de re-ejecución.
 
 ---
 
@@ -20,51 +24,89 @@
 
 ### Configuración
 
-- **Framework:** xUnit 2.5.3
+- **Framework:** xUnit 2.9.3
 - **Base de datos:** Microsoft.EntityFrameworkCore.InMemory 8.0.30
-- **Autenticación:** ClaimsPrincipal mock (idUsuario=1, idHogar=1)
-- **Carpeta:** `RemesSmartSV.Tests/`
+- **Autenticación:** ClaimsPrincipal mock (idHogar / idUsuario según cada suite)
+- **Proyecto de tests (reproducible):** `backend.Tests/` (referencia a `backend/RemesaSmartSV.csproj`)
+- **Comando:** `dotnet test backend.Tests\backend.Tests.csproj`
+- **Resultado:** 52/52 correctos, 0 fallos, 0 omitidos (duración 8 s)
 
-### AlertasDtosTests (2 tests)
-
-| # | Test | Descripción | Estado |
-|---|---|---|---|
-| 1 | `AlertaPeriodoRequestDTO_FechasRequeridas` | Verifica que el DTO de request de alertas por período crea instancias con fechas correctas | ✅ Pass |
-| 2 | `AlertaResponseDTO_CreaInstancia` | Verifica que el DTO de response de alertas crea instancias con tipoAlerta, mensaje y porcentajeUsado | ✅ Pass |
-
-### ReportesDtosTests (2 tests)
+### AuthServiceTests (9 tests)
 
 | # | Test | Descripción | Estado |
 |---|---|---|---|
-| 3 | `ReportePeriodoRequestDTO_FechasRequeridas` | Verifica que el DTO de request de reportes por período crea instancias con fechas correctas | ✅ Pass |
-| 4 | `ReportePeriodoResponseDTO_CreaInstancia` | Verifica que el DTO de response de reportes crea instancias con totales, cantidades y balance | ✅ Pass |
+| 1 | `RegisterAsync_ConNuevoCorreo_RegistraHogarYUsuarioAdmin` | Registro crea hogar y usuario admin | ✅ Pass |
+| 2 | `RegisterAsync_ConCorreoDuplicado_SinDiferenciarMayusculas_DevuelveNull` | Correo duplicado (case-insensitive) retorna null | ✅ Pass |
+| 3 | `RegisterAsync_ConCorreoDuplicado_NoCreaHogarNiUsuario` | No persiste hogar/usuario duplicado | ✅ Pass |
+| 4 | `RegisterAsync_DevuelveTokenJwtValidoConClaims` | Emite JWT con claims esperados | ✅ Pass |
+| 5 | `LoginAsync_ConCredencialesCorrectas_DevuelveToken` | Login correcto devuelve token | ✅ Pass |
+| 6 | `LoginAsync_ConCorreoInexistente_DevuelveNull` | Login con correo inexistente devuelve null | ✅ Pass |
+| 7 | `LoginAsync_ConCorreoEnMinusculasYRegistroEnMayusculas_Autentica` | Login normaliza mayúsculas | ✅ Pass |
+| 8 | `LoginAsync_ConContrasenaIncorrecta_DevuelveNull` | Contraseña incorrecta rechaza | ✅ Pass |
+| 9 | `RegisterAsync_AsignaContrasenaHasheadaNoPlana` | La contraseña no se almacena en plano | ✅ Pass |
 
-### MetasAhorroControllerTests (9 tests)
-
-| # | Test | Descripción | Estado |
-|---|---|---|---|
-| 5 | `GetMetas_RetornaListaVacia` | GET /api/MetasAhorro retorna lista paginada vacía cuando no hay metas | ✅ Pass |
-| 6 | `GetMetas_RetornaSoloMetasDelHogar` | GET /api/MetasAhorro solo retorna metas del hogar autenticado (filtra por idHogar) | ✅ Pass |
-| 7 | `GetMeta_RetornaMetaPorId` | GET /api/MetasAhorro/{id} retorna la meta correcta por ID | ✅ Pass |
-| 8 | `GetMeta_NoExiste_RetornaNotFound` | GET /api/MetasAhorro/{id} retorna 404 cuando la meta no existe | ✅ Pass |
-| 9 | `Create_AgregaMetaConValoresDefault` | POST /api/MetasAhorro crea meta con MontoActual=0 y Estado="En progreso" | ✅ Pass |
-| 10 | `Update_ModificaCampos` | PUT /api/MetasAhorro/{id} actualiza título, monto objetivo y fecha límite | ✅ Pass |
-| 11 | `Update_NoExiste_RetornaNotFound` | PUT /api/MetasAhorro/{id} retorna 404 cuando la meta no existe | ✅ Pass |
-| 12 | `Delete_EliminaMeta` | DELETE /api/MetasAhorro/{id} elimina la meta correctamente | ✅ Pass |
-| 13 | `Delete_NoExiste_RetornaNotFound` | DELETE /api/MetasAhorro/{id} retorna 404 cuando la meta no existe | ✅ Pass |
-
-### AportesControllerTests (8 tests)
+### CategoriasControllerTests (12 tests)
 
 | # | Test | Descripción | Estado |
 |---|---|---|---|
-| 14 | `GetAportes_MetaNoExiste_RetornaBadRequest` | GET /api/Aportes/{metaId} retorna 400 cuando la meta no existe | ✅ Pass |
-| 15 | `GetAportes_MetaExiste_RetornaLista` | GET /api/Aportes/{metaId} retorna lista de aportes de la meta | ✅ Pass |
-| 16 | `Create_AgregaAporteYActualizaMeta` | POST /api/Aportes crea aporte y actualiza MontoActual de la meta | ✅ Pass |
-| 17 | `Create_MontoSuperaObjetivo_MarcaComoCompletada` | POST /api/Aportes marca meta como "Completada" cuando monto supera objetivo | ✅ Pass |
-| 18 | `Create_MetaNoExiste_RetornaBadRequest` | POST /api/Aportes retorna 400 cuando la meta no existe | ✅ Pass |
-| 19 | `Delete_EliminaAporteYRestaMonto` | DELETE /api/Aportes/{id} elimina aporte y resta monto de la meta | ✅ Pass |
-| 20 | `Delete_AporteNoExiste_RetornaNotFound` | DELETE /api/Aportes/{id} retorna 404 cuando el aporte no existe | ✅ Pass |
-| 21 | `Create_SumaMontosMultiples` | POST /api/Aportes suma correctamente múltiples aportes al MontoActual | ✅ Pass |
+| 10 | `GetCategorias_SoloDevuelveCategoriasDelHogarOrdenadasPorNombre` | GET /api/Categorias filtra por hogar y ordena | ✅ Pass |
+| 11 | `GetCategoria_DeMismoHogar_DevuelveCategoria` | GET /{id} del mismo hogar devuelve la categoría | ✅ Pass |
+| 12 | `GetCategoria_DeOtroHogar_DevuelveNotFound` | GET /{id} de otro hogar devuelve 404 | ✅ Pass |
+| 13 | `GetCategoria_Inexistente_DevuelveNotFound` | GET /{id} inexistente devuelve 404 | ✅ Pass |
+| 14 | `Create_AsignaHogarDelUsuarioYPersiste` | POST asigna idHogar del claim | ✅ Pass |
+| 15 | `Create_IgnoraIdCategoriaProporcionado` | POST ignora el IdCategoria enviado | ✅ Pass |
+| 16 | `Update_DeMismoHogar_ActualizaCamposYDevuelveNoContent` | PUT actualiza campos y retorna 204 | ✅ Pass |
+| 17 | `Update_DeOtroHogar_NoModificaYDevuelveNotFound` | PUT de otro hogar no modifica (404) | ✅ Pass |
+| 18 | `Update_Inexistente_DevuelveNotFound` | PUT inexistente devuelve 404 | ✅ Pass |
+| 19 | `Delete_DeMismoHogar_EliminaYDevuelveNoContent` | DELETE del mismo hogar elimina (204) | ✅ Pass |
+| 20 | `Delete_DeOtroHogar_NoEliminaYDevuelveNotFound` | DELETE de otro hogar no elimina (404) | ✅ Pass |
+| 21 | `Delete_Inexistente_DevuelveNotFound` | DELETE inexistente devuelve 404 | ✅ Pass |
+
+### FiltrosPaginacionTests (9 tests)
+
+| # | Test | Descripción | Estado |
+|---|---|---|---|
+| 22 | `GetMovimientos_FiltroCombinadoCategoriaYTipo_DevuelveSoloLaInterseccion` | Filtro combinado (categoría+tipo) retorna intersección | ✅ Pass |
+| 23 | `GetMovimientos_FiltroCategoriaInexistente_DevuelveVacio` | Categoría inexistente devuelve vacío | ✅ Pass |
+| 24 | `GetMovimientos_FiltroTipoConEspacios_SeIgnoraYDevuelveTodos` | Filtro tipo con espacios se ignora | ✅ Pass |
+| 25 | `GetMovimientos_CienRegistros_SinPaginacionDevuelveTodos` | 100 registros sin paginación devuelve todos | ✅ Pass |
+| 26 | `GetPresupuestos_FiltroAnioYMes_DevuelveSoloElMesSolicitado` | Presupuestos filtra año+mes | ✅ Pass |
+| 27 | `GetPresupuestos_FiltroSoloAnio_SinMesSeIgnoraYDevuelveTodos` | Solo año sin mes se ignora | ✅ Pass |
+| 28 | `GetPresupuestos_FiltroSoloMes_SinAnioSeIgnoraYDevuelveTodos` | Solo mes sin año se ignora | ✅ Pass |
+| 29 | `GetPresupuestos_FiltroSinCoincidencias_DevuelveVacio` | Sin coincidencias devuelve vacío | ✅ Pass |
+| 30 | `GetPresupuestos_CincuentaRegistros_SinPaginacionDevuelveTodos` | 50 registros sin paginación devuelve todos | ✅ Pass |
+
+### MovimientosControllerTests (18 tests)
+
+| # | Test | Descripción | Estado |
+|---|---|---|---|
+| 31 | `GetMovimientos_SinFiltros_DevuelveDelHogarOrdenadosPorFechaDescendente` | GET sin filtros filtra hogar y ordena por fecha desc | ✅ Pass |
+| 32 | `GetMovimientos_ConFiltroCategoriaId_SoloDevuelveDeEsaCategoria` | Filtro por categoría | ✅ Pass |
+| 33 | `GetMovimientos_ConFiltroTipo_SoloDevuelveDeEseTipo` | Filtro por tipo | ✅ Pass |
+| 34 | `GetMovimientos_ConFiltroTipoEnMinusculas_DevuelveVacio` | Filtro tipo en minúsculas devuelve vacío | ✅ Pass |
+| 35 | `GetMovimiento_DeMismoHogar_DevuelveMovimiento` | GET /{id} del mismo hogar | ✅ Pass |
+| 36 | `GetMovimiento_DeOtroHogar_DevuelveNotFound` | GET /{id} de otro hogar (404) | ✅ Pass |
+| 37 | `GetMovimiento_Inexistente_DevuelveNotFound` | GET /{id} inexistente (404) | ✅ Pass |
+| 38 | `Create_ConCategoriaDelHogar_AsignaHogarYUsuarioYPersiste` | POST asigna hogar/usuario y persiste | ✅ Pass |
+| 39 | `Create_ConCategoriaDeOtroHogar_DevuelveBadRequestYNoPersiste` | POST con categoría de otro hogar (400, no persiste) | ✅ Pass |
+| 40 | `Create_ConCategoriaInexistente_DevuelveBadRequestYNoPersiste` | POST con categoría inexistente (400) | ✅ Pass |
+| 41 | `Update_DeMismoHogar_ActualizaCamposYDevuelveNoContent` | PUT actualiza y retorna 204 | ✅ Pass |
+| 42 | `Update_CambioACategoriaValidaDelHogar_ActualizaIdCategoria` | PUT cambia a categoría válida del hogar | ✅ Pass |
+| 43 | `Update_CambioACategoriaDeOtroHogar_DevuelveBadRequestYNoCambia` | PUT cambia a categoría de otro hogar (400) | ✅ Pass |
+| 44 | `Update_DeOtroHogar_DevuelveNotFound` | PUT de otro hogar (404) | ✅ Pass |
+| 45 | `Update_Inexistente_DevuelveNotFound` | PUT inexistente (404) | ✅ Pass |
+| 46 | `Delete_DeMismoHogar_EliminaYDevuelveNoContent` | DELETE elimina (204) | ✅ Pass |
+| 47 | `Delete_DeOtroHogar_NoEliminaYDevuelveNotFound` | DELETE de otro hogar no elimina (404) | ✅ Pass |
+| 48 | `Delete_Inexistente_DevuelveNotFound` | DELETE inexistente (404) | ✅ Pass |
+
+### PerformanceTests (4 tests)
+
+| # | Test | Descripción | Estado |
+|---|---|---|---|
+| 49 | `GetMovimientos_ConDosMilRegistros_RespondeEnMenosDeCincoSegundos` | 2000 registros en < 5 s | ✅ Pass |
+| 50 | `GetMovimientos_ConFiltroYDiezMilRegistros_RespondeEnMenosDeCincoSegundos` | Filtro sobre 10000 registros en < 5 s | ✅ Pass |
+| 51 | `Create_MilMovimientosSecuenciales_TardaMenosDeDiezSegundos` | 1000 creates secuenciales en < 10 s | ✅ Pass |
+| 52 | `GetPresupuestos_ConDosMilRegistros_RespondeEnMenosDeCincoSegundos` | 2000 presupuestos filtrados en < 5 s | ✅ Pass |
 
 ---
 
@@ -75,64 +117,45 @@
 - **Framework:** Vitest 3.2.7
 - **Librería de testing:** @testing-library/react
 - **Entorno:** jsdom
-- **Carpeta:** `src/`
+- **Carpeta:** `src/` (repositorio `RemesaSmartSV/frontend`)
+- **Comando:** `npm run test` (vitest run)
 
-### App.test.jsx (2 tests)
+### Estado: ⏸️ Pendiente
+
+No se ejecutó en esta corrida porque Node.js no está instalado en el entorno.
+La suite registrada anteriormente incluye 2 casos en `App.test.jsx`:
 
 | # | Test | Descripción | Estado |
 |---|---|---|---|
-| 1 | `renderiza sin errores` | Verifica que el componente App renderiza sin errores de JavaScript | ✅ Pass |
-| 2 | `muestra el titulo de la app` | Verifica que se muestra "RemesaSmart" en la pantalla | ✅ Pass |
+| 1 | `renderiza sin errores` | Verifica que App renderiza sin errores | ⏸️ No ejecutado |
+| 2 | `muestra el titulo de la app` | Verifica que se muestra "RemesaSmart" | ⏸️ No ejecutado |
 
 ---
 
-## Endpoints Verificados (API)
+## Pruebas de Integración (scripts PowerShell + Docker)
 
-| Método | Endpoint | Autenticado | Estado |
+Los scripts E2E de API no se ejecutaron en esta corrida porque Docker Desktop no
+está activo (requieren la API en `http://localhost:8080`).
+
+| Suite | Ruta | Casos |
+|---|---|---|
+| HU-01 (Auth / Hogares / Usuarios) | `doc/qa/HU01/Ejecutar_Pruebas_HU01.ps1` | 27 |
+| HU-05 (Presupuestos) | `doc/qa/HU05/Ejecutar_Pruebas_HU05.ps1` | 27 |
+| Filtros / Paginación | `doc/qa/FILTROS-PAGINACION/Ejecutar_Pruebas_Filtros_Paginacion.ps1` | 17 |
+| Performance (API) | `doc/qa/PERF/Ejecutar_Pruebas_Performance.ps1` | 8 |
+
+---
+
+## Cobertura de Código (estimada)
+
+| Módulo | Suite | Tests | Cobertura estimada |
 |---|---|---|---|
-| POST | /api/Auth/register | No | ✅ Funcional |
-| POST | /api/Auth/login | No | ✅ Funcional |
-| GET | /api/Movimientos | Sí (Bearer) | ✅ Funcional |
-| POST | /api/Movimientos | Sí (Bearer) | ✅ Funcional |
-| GET | /api/Categorias | Sí (Bearer) | ✅ Funcional |
-| POST | /api/Categorias | Sí (Bearer) | ✅ Funcional |
-| GET | /api/MetasAhorro | Sí (Bearer) | ✅ Funcional |
-| POST | /api/MetasAhorro | Sí (Bearer) | ✅ Funcional |
-| GET | /api/Aportes/{metaId} | Sí (Bearer) | ✅ Funcional |
-| POST | /api/Aportes | Sí (Bearer) | ✅ Funcional |
-
----
-
-## Cobertura de Código
-
-| Módulo | Archivos | Tests | Cobertura estimada |
-|---|---|---|---|
-| DTOs (Alertas, Reportes) | 2 | 4 | ~80% |
-| MetasAhorroController | 1 | 9 | ~90% |
-| AportesController | 1 | 8 | ~85% |
-| MovimientosController | 1 | 0 (pendiente) | ~40% |
-| CategoriasController | 1 | 0 (pendiente) | ~40% |
-| Frontend App | 1 | 2 | ~30% |
-
----
-
-## Bugs Encontrados y Corregidos
-
-| # | Bug | Severidad | Estado |
-|---|---|---|---|
-| 1 | EF Core InMemory versión 8.0.11 no compatible con proyecto principal 8.0.30 | Alta | ✅ Corregido |
-| 2 | Test project se compilaba dentro del proyecto principal (faltaba `<Compile Remove>`) | Alta | ✅ Corregido |
-| 3 | useEffect en Layout.jsx recargaba alertas en cada cambio de ruta | Media | ✅ Corregido |
-| 4 | Dropdown de alertas no se cerraba al hacer click fuera | Media | ✅ Corregido |
-
----
-
-## Recomendaciones
-
-1. **Agregar tests para MovimientosController y CategoriasController** — actualmente no tienen tests unitarios
-2. **Incrementar cobertura de frontend** — solo 2 tests básicos de renderizado
-3. **Agregar tests de integración** — probar flujo completo registro → login → crear movimiento
-4. **Configurar code coverage** — integrar herramienta como Coverlet para métricas precisas
+| AuthService | AuthServiceTests | 9 | ~85% |
+| CategoriasController | CategoriasControllerTests | 12 | ~90% |
+| MovimientosController | FiltrosPaginacionTests + MovimientosControllerTests | 27 | ~90% |
+| PresupuestosController | FiltrosPaginacionTests | 9 | ~60% |
+| Performance (read/write) | PerformanceTests | 4 | N/A (SLA) |
+| Frontend App | — | pendiente | ~30% (reporte previo) |
 
 ---
 
@@ -140,6 +163,7 @@
 
 - **OS:** Windows 11
 - **.NET SDK:** 10.0.302
-- **Node.js:** 20.x
-- **Docker:** Docker Desktop
+- **Runtime .NET:** 8.0.30
+- **Node.js:** no instalado (frontend pendiente)
+- **Docker:** Docker Desktop no activo (E2E pendiente)
 - **Base de datos de pruebas:** EF Core InMemory (no requiere PostgreSQL)
