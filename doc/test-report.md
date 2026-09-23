@@ -1,8 +1,8 @@
 # Reporte de Pruebas — RemesaSmartSV
 
-**Fecha:** 16 de septiembre de 2026
+**Fecha:** 23 de septiembre de 2026 (última corrida integrada — suites de API con Docker)
 **Proyecto:** RemesaSmartSV — Aplicación de finanzas familiares y remesas
-**Responsable:** Emelie López (documentación) / Branham Alabi (ejecución)
+**Responsable:** Emelie López (documentación) / Branham Alabi (ejecución QA)
 
 ---
 
@@ -11,12 +11,21 @@
 | Componente | Framework | Tests | Pasaron | Fallaron | Estado |
 |---|---|---|---|---|---|
 | Backend (xUnit) | xUnit 2.9.3 + EF Core InMemory | 52 | 52 | 0 | ✅ |
+| HU-01 (Auth/Hogares/Usuarios · API) | PowerShell + HTTP (Docker) | 27 | 25 | 2 | ⚠️ 2 bugs abiertos (BUG-01, BUG-02) |
+| HU-05 (Presupuestos · API) | PowerShell + HTTP (Docker) | 27 | 27 | 0 | ✅ |
+| Filtros/Paginación (API) | PowerShell + HTTP (Docker) | 17 | 17 | 0 | ✅ |
+| Performance (API) | PowerShell + HTTP (Docker) | 8 | 7 | 0 | ✅ (1 SALTADO opcional) |
 | Frontend (Vitest) | Vitest + React Testing Library | — | — | — | ⏸️ Pendiente (Node no instalado) |
-| **Total** | | **52** | **52** | **0** | **✅** |
+| **Total** | | **131** | **128** | **2** | **⚠️** |
 
-> **Nota:** los tests de frontend (Vitest) no se ejecutaron en esta corrida porque
-> Node.js no está instalado en el entorno. El reporte anterior registró 2 casos de
-> `App.test.jsx` (renderizado y título). Quedan pendientes de re-ejecución.
+> **Nota:** los tests de frontend (Vitest) no se ejecutaron porque Node.js no está
+> instalado en el entorno (reporte previo: 2 casos de `App.test.jsx` pendientes).
+>
+> **Bug corregido durante esta corrida:** `GET /api/Presupuestos?anio=&mes=` devolvía
+> `500` con PostgreSQL cuando existía un presupuesto con `MesAnio` por defecto
+> (`0001-01-01` → `-infinity`). Corregido en `PresupuestosController` mediante
+> filtro por rango de fechas (UTC). Ver `doc/qa/HU05/issues/BUG-05-01-filtro-presupuestos-500-postgres.md`.
+> Sin regresión: xUnit sigue **52/52**.
 
 ---
 
@@ -134,15 +143,59 @@ La suite registrada anteriormente incluye 2 casos en `App.test.jsx`:
 
 ## Pruebas de Integración (scripts PowerShell + Docker)
 
-Los scripts E2E de API no se ejecutaron en esta corrida porque Docker Desktop no
-está activo (requieren la API en `http://localhost:8080`).
+Ejecutadas el **23/09/2026** contra el entorno integrado (`docker compose up` con
+PostgreSQL 16 + API .NET 8 en `http://localhost:8080`) y base limpia
+(`docker compose down -v` antes de cada batería).
 
-| Suite | Ruta | Casos |
-|---|---|---|
-| HU-01 (Auth / Hogares / Usuarios) | `doc/qa/HU01/Ejecutar_Pruebas_HU01.ps1` | 27 |
-| HU-05 (Presupuestos) | `doc/qa/HU05/Ejecutar_Pruebas_HU05.ps1` | 27 |
-| Filtros / Paginación | `doc/qa/FILTROS-PAGINACION/Ejecutar_Pruebas_Filtros_Paginacion.ps1` | 17 |
-| Performance (API) | `doc/qa/PERF/Ejecutar_Pruebas_Performance.ps1` | 8 |
+| Suite | Ruta | Casos | Resultado |
+|---|---|---|---|
+| HU-01 (Auth / Hogares / Usuarios) | `doc/qa/HU01/Ejecutar_Pruebas_HU01.ps1` | 27 | 25 PASS / 2 FAIL (corrida previa) |
+| HU-05 (Presupuestos) | `doc/qa/HU05/Ejecutar_Pruebas_HU05.ps1` | 27 | **27/27 PASS** |
+| Filtros / Paginación | `doc/qa/FILTROS-PAGINACION/Ejecutar_Pruebas_Filtros_Paginacion.ps1` | 17 | **17/17 PASS** |
+| Performance (API) | `doc/qa/PERF/Ejecutar_Pruebas_Performance.ps1` | 8 | **7/7 PASS** + 1 SALTADO |
+| **Total** | | **79** | **76 PASS · 2 FAIL · 1 SALTADO** |
+
+### HU-05 — Presupuestos (27/27 PASS)
+
+Cobertura: seguridad/aislamiento (sin token, token alterado, hogar ajeno, inyección
+de `idHogar`), creación (categoría inexistente/ajena, `MontoLimite=0/negativo`),
+consulta (filtros `anio+mes`, aislamiento, orden desc), edición (categoría ajena,
+404), eliminación (propio/ajeno/inexistente).
+
+> ⚠️ Casos marcados **CONFIRMAR-CON-EQUIPO** (comportamiento real, no fallo): rol
+> Miembro puede operar presupuestos (CP-06), `MontoLimite` admite 0/negativo
+> (CP-10/11/24), `MesAnio` no es obligatorio (CP-12) y no hay unicidad
+> categoría+mes (CP-13). Si la especificación exige lo contrario, son bugs de
+> validación a reportar. Detalle en `doc/qa/HU05/Casos_Prueba_HU05.md`.
+
+### Filtros / Paginación (17/17 PASS)
+
+- **Filtros de Movimientos:** por categoría, tipo, combinado e inexistente, con
+  aislamiento por hogar y orden por fecha desc. Confirmado: `?tipo=gasto`
+  (minúsculas) devuelve vacío (comparación sensible a mayúsculas, FP-05).
+- **Filtros de Presupuestos:** `anio+mes` → solo ese mes; solo `anio` o solo `mes`
+  → devuelve todo (filtro ignorado); sin coincidencias → `[]`.
+- **Paginación:** no existe en el backend; `page`/`pageSize` se ignoran y los
+  listados devuelven el set completo (FP-13 a FP-17). **CONFIRMAR-CON-EQUIPO** si
+  debe implementarse para el MVP.
+
+### Performance (API) — línea base con PostgreSQL
+
+Ejecutado con volúmenes por defecto (1.000 movimientos, 200 presupuestos, 50
+categorías, 5 repeticiones). **PP-05 (volumen alto)** quedó `SALTADO` por diseño:
+requiere `-Movimientos 10000`.
+
+| Caso | Escenario | Mediana | p95 | Umbral | Estado |
+|---|---|---|---|---|---|
+| PP-01 | GET Movimientos (1.000) | 17 ms | 19 ms | 500 | ✅ |
+| PP-02 | GET Movimientos filtro cat+tipo | 12 ms | 13 ms | 500 | ✅ |
+| PP-03 | GET Presupuestos `anio+mes` | 9 ms | 9 ms | 500 | ✅ |
+| PP-04 | GET Categorías (50) | 20 ms | 28 ms | 300 | ✅ |
+| PP-06 | POST Movimiento puntual | 13 ms | 13 ms | 500 | ✅ |
+| PP-07 | Siembra masiva 1.000 (secuencial) | 16.6 s global | — | 90.000 | ✅ |
+| PP-08 | Login | 110 ms | 115 ms | 500 | ✅ |
+
+> Para correr PP-05 (volumen alto): `-Movimientos 10000` (siembra ~2.5 min).
 
 ---
 
@@ -161,9 +214,20 @@ está activo (requieren la API en `http://localhost:8080`).
 
 ## Entorno de Ejecución
 
-- **OS:** Windows 11
+- **OS:** Windows 11 · PowerShell 5.1
 - **.NET SDK:** 10.0.302
 - **Runtime .NET:** 8.0.30
 - **Node.js:** no instalado (frontend pendiente)
-- **Docker:** Docker Desktop no activo (E2E pendiente)
-- **Base de datos de pruebas:** EF Core InMemory (no requiere PostgreSQL)
+- **Docker:** Docker Desktop activo durante esta corrida (PostgreSQL 16 + API en `http://localhost:8080`)
+- **Bases de datos de pruebas:** EF Core InMemory (xUnit) + PostgreSQL 16 (suites de integración API)
+
+## Hallazgos y acciones de esta corrida
+
+| # | Hallazgo | Tipo | Acción |
+|---|---|---|---|
+| BUG-05-01 | `GET /api/Presupuestos?anio=&mes=` → 500 `integer out of range` en PostgreSQL si existe un `MesAnio=0001-01-01` (`-infinity`) | Bug (solo PostgreSQL) | **Corregido** en `Controllers/PresupuestosController.cs` (filtro por rango UTC). Issue: `doc/qa/HU05/issues/BUG-05-01-...md` |
+| PS (scripts QA) | `@($body | ConvertFrom-Json)` anida el array un nivel en PowerShell 5.1 | Bug de script | Corregido en los 3 scripts (HU-05, FP, PERF): re-emisión con `ForEach-Object { $_ }` |
+| PS (script PERF) | `$body = $r.Body` pisaba el parámetro `$Body` (case-insensitive) → lanzaba ProtocolViolation en GET | Bug de script | Corregido: variable local renombrada a `$respBody` |
+| CONFIRMAR-CON-EQUIPO | HU-01: BUG-01 (claim `role` corto en JWT) y BUG-02 (`PUT /api/Hogares` sin restricción Admin) | Bugs abiertos | Pendientes de decisión del equipo (`doc/qa/HU01/issues/`) |
+| CONFIRMAR-CON-EQUIPO | HU-05: permisos de Miembro, `MontoLimite<=0`, `MesAnio` opcional, unicidad categoría+mes | Comportamiento real | Revisar criterios de aceptación (CP-06, CP-10..13, CP-24) |
+| CONFIRMAR-CON-EQUIPO | Backend sin paginación en ningún listado | Faltante documentado | Definir si es defecto o *works as designed* para el MVP |

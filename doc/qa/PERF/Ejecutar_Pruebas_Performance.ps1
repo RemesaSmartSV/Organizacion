@@ -122,16 +122,16 @@ Write-Output "Siembra de $Movimientos movimientos en $($pp07Ms) ms"
 
 function Medir-Endpoint {
     param([string]$Method, [string]$Path, $Body, [string]$Token)
-    $lat = @(); $codigo = $null; $body = $null
+    $lat = @(); $codigo = $null; $respBody = $null
     for ($i = 0; $i -lt $Repeticiones; $i++) {
         $sw = [System.Diagnostics.Stopwatch]::StartNew()
         $r = Invoke-Api $Method $Path $Body $Token
         $sw.Stop()
         $lat += $sw.ElapsedMilliseconds
         $codigo = $r.Code
-        $body = $r.Body
+        $respBody = $r.Body
     }
-    [pscustomobject]@{ Codigo = $codigo; Body = $body; Lat = $lat }
+    [pscustomobject]@{ Codigo = $codigo; Body = $respBody; Lat = $lat }
 }
 
 # ============================================================
@@ -141,7 +141,7 @@ Write-Output '===== SECCION 1: Consulta (GET) ====='
 # --- PP-01: listar movimientos (volumen sembrado) ---
 $m = Medir-Endpoint 'GET' '/api/Movimientos' $null $token
 $e = Medir-PromedioP95 $m.Lat
-$lista01 = @($m.Body | ConvertFrom-Json)
+$lista01 = @($m.Body | ConvertFrom-Json | ForEach-Object { $_ })
 $total01 = $lista01.Count
 $paso = (($m.Codigo -eq 200) -and ($total01 -eq $Movimientos) -and ($e.P95 -lt $UmbralLectura))
 $estado = if ($paso) { 'PASO' } else { 'FALLO' }
@@ -150,7 +150,7 @@ Add-Resultado 'PP-01' 'Listar movimientos (volumen sembrado)' $estado "200, coun
 # --- PP-02: filtro categoria + tipo ---
 $m = Medir-Endpoint 'GET' "/api/Movimientos?categoriaId=$catGasto&tipo=Gasto" $null $token
 $e = Medir-PromedioP95 $m.Lat
-$count2 = @($m.Body | ConvertFrom-Json)
+$count2 = @($m.Body | ConvertFrom-Json | ForEach-Object { $_ })
 $filtroOk = (($count2 | Where-Object { [int]$_.idCategoria -ne $catGasto -or $_.tipo -ne 'Gasto' }).Count -eq 0)
 $paso = (($m.Codigo -eq 200) -and ($count2.Count -gt 0) -and $filtroOk -and ($e.P95 -lt $UmbralLectura))
 $estado = if ($paso) { 'PASO' } else { 'FALLO' }
@@ -159,7 +159,7 @@ Add-Resultado 'PP-02' 'Listar movimientos filtrados por categoria+tipo' $estado 
 # --- PP-03: filtro presupuestos anio+mes ---
 $m = Medir-Endpoint 'GET' '/api/Presupuestos?anio=2026&mes=9' $null $token
 $e = Medir-PromedioP95 $m.Lat
-$count3 = @($m.Body | ConvertFrom-Json)
+$count3 = @($m.Body | ConvertFrom-Json | ForEach-Object { $_ })
 $presFiltroOk = (($count3 | Where-Object { $_.mesAnio -notmatch '^2026-09' }).Count -eq 0)
 $paso = (($m.Codigo -eq 200) -and $presFiltroOk -and ($e.P95 -lt $UmbralLectura))
 $estado = if ($paso) { 'PASO' } else { 'FALLO' }
@@ -168,7 +168,7 @@ Add-Resultado 'PP-03' 'Listar presupuestos filtrados anio+mes' $estado '200, sol
 # --- PP-04: listar categorias ---
 $m = Medir-Endpoint 'GET' '/api/Categorias' $null $token
 $e = Medir-PromedioP95 $m.Lat
-$count4 = @($m.Body | ConvertFrom-Json)
+$count4 = @($m.Body | ConvertFrom-Json | ForEach-Object { $_ })
 $paso = (($m.Codigo -eq 200) -and ($count4.Count -eq $Categorias) -and ($e.P95 -lt 300))
 $estado = if ($paso) { 'PASO' } else { 'FALLO' }
 Add-Resultado 'PP-04' 'Listar categorias (50 registros)' $estado "200, count=$Categorias, p95 < 300 ms" "HTTP $($m.Codigo), count=$($count4.Count), mediana=$($e.Mediana)ms p95=$($e.P95)ms"
@@ -177,7 +177,7 @@ Add-Resultado 'PP-04' 'Listar categorias (50 registros)' $estado "200, count=$Ca
 if ($Movimientos -ge 10000) {
     $m = Medir-Endpoint 'GET' '/api/Movimientos' $null $token
     $e = Medir-PromedioP95 $m.Lat
-    $count5 = @($m.Body | ConvertFrom-Json)
+    $count5 = @($m.Body | ConvertFrom-Json | ForEach-Object { $_ })
     $paso = (($m.Codigo -eq 200) -and ($count5.Count -eq $Movimientos) -and ($e.P95 -lt $UmbralVolumenAlto))
     $estado = if ($paso) { 'PASO' } else { 'FALLO' }
     Add-Resultado 'PP-05' 'Listar movimientos (volumen alto)' $estado "count=$Movimientos, p95 < $($UmbralVolumenAlto) ms" "HTTP $($m.Codigo), count=$($count5.Count), mediana=$($e.Mediana)ms p95=$($e.P95)ms" "SIN paginacion: devuelve todo el set (ver FILTROS-PAGINACION)"
