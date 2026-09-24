@@ -1,0 +1,185 @@
+=== Ejecucion HU-05 2026-09-23T17:27:33 ===
+POST /api/Auth/register -> 200
+ReqBody: {"nombreFamiliar":"Familia Demo HU05","contrasena":"Demo1234!","nombre":"Carlos Hu05","correo":"carlos.hu05@demo-test.com"}
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiIxIiwiaWRIb2dhciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImVtYWlsIjoiY2FybG9zLmh1MDVAZGVtby10ZXN0LmNvbSIsImV4cCI6MTc5MDIzNDg1NCwiaXNzIjoiUmVtZXNhU21hcnRTViIsImF1ZCI6IlJlbWVzYVNtYXJ0U1ZDbGllbnQifQ.ofgsp3RGDDP5clX094zhtRtZ-u4FvCf8ZC5w8K-FzpU","idUsuario":1,"nombre":"Carlos Hu05","correo":"carlos.hu05@demo-test.com","rol":"Admin","idHogar":1}
+
+POST /api/Auth/register -> 200
+ReqBody: {"nombreFamiliar":"Familia B HU05","contrasena":"Demo1234!","nombre":"Marta Hu05","correo":"marta.hu05@demo-test.com"}
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiIyIiwiaWRIb2dhciI6IjIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImVtYWlsIjoibWFydGEuaHUwNUBkZW1vLXRlc3QuY29tIiwiZXhwIjoxNzkwMjM0ODU0LCJpc3MiOiJSZW1lc2FTbWFydFNWIiwiYXVkIjoiUmVtZXNhU21hcnRTVkNsaWVudCJ9.G0chNozxdz3L0R-5va3nG6Q_9wc_SrvI8CL_BERyYy8","idUsuario":2,"nombre":"Marta Hu05","correo":"marta.hu05@demo-test.com","rol":"Admin","idHogar":2}
+
+POST /api/Categorias -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"icono":"manzana","nombre":"Alimentacion","tipo":"Gasto"}
+RespBody: {"idCategoria":1,"idHogar":1,"nombre":"Alimentacion","tipo":"Gasto","icono":"manzana"}
+
+POST /api/Categorias -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"icono":"moneda","nombre":"Salario","tipo":"Ingreso"}
+RespBody: {"idCategoria":2,"idHogar":1,"nombre":"Salario","tipo":"Ingreso","icono":"moneda"}
+
+POST /api/Categorias -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"icono":"bus","nombre":"Transporte","tipo":"Gasto"}
+RespBody: {"idCategoria":3,"idHogar":1,"nombre":"Transporte","tipo":"Gasto","icono":"bus"}
+
+POST /api/Usuarios -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"contrasena":"Demo1234!","nombre":"Ana Hu05","rol":"Miembro","correo":"ana.hu05@demo-test.com"}
+RespBody: {"idUsuario":3,"idHogar":1,"nombre":"Ana Hu05","correo":"ana.hu05@demo-test.com","rol":"Miembro","fechaRegistro":"2026-09-23T23:27:34.7481158Z"}
+
+POST /api/Auth/login -> 200
+ReqBody: {"contrasena":"Demo1234!","correo":"ana.hu05@demo-test.com"}
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiIzIiwiaWRIb2dhciI6IjEiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJNaWVtYnJvIiwiZW1haWwiOiJhbmEuaHUwNUBkZW1vLXRlc3QuY29tIiwiZXhwIjoxNzkwMjM0ODU0LCJpc3MiOiJSZW1lc2FTbWFydFNWIiwiYXVkIjoiUmVtZXNhU21hcnRTVkNsaWVudCJ9.xAtblCW5TV2anS5L7whkzPoOFpbdrX3TyU0rKW_ej_Y","idUsuario":3,"nombre":"Ana Hu05","correo":"ana.hu05@demo-test.com","rol":"Miembro","idHogar":1}
+
+POST /api/Categorias -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"icono":"libro","nombre":"Educacion","tipo":"Gasto"}
+RespBody: {"idCategoria":4,"idHogar":2,"nombre":"Educacion","tipo":"Gasto","icono":"libro"}
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":4,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":500}
+RespBody: {"idPresupuesto":1,"idHogar":2,"idCategoria":4,"montoLimite":500,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 401
+ReqBody: {"idCategoria":1,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":100}
+
+GET /api/Presupuestos -> 401
+
+POST /api/Presupuestos -> 401
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":1,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":100}
+
+GET /api/Presupuestos/1 -> 404
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-8022e8e724afa190b5bd47ce8fca9d26-f193be51b78c60e0-00"}
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":1,"idHogar":2,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":100}
+RespBody: {"idPresupuesto":2,"idHogar":1,"idCategoria":1,"montoLimite":100,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":3,"mesAnio":"2026-10-01T00:00:00Z","montoLimite":80}
+RespBody: {"idPresupuesto":3,"idHogar":1,"idCategoria":3,"montoLimite":80,"mesAnio":"2026-10-01T00:00:00.0000000Z"}
+
+PUT /api/Presupuestos/3 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":3,"mesAnio":"2026-10-01T00:00:00Z","montoLimite":90}
+
+DELETE /api/Presupuestos/3 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":1,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":300}
+RespBody: {"idPresupuesto":4,"idHogar":1,"idCategoria":1,"montoLimite":300,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 400
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":99999,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":100}
+RespBody: {"message":"La categoría no existe o no pertenece a tu hogar."}
+
+POST /api/Presupuestos -> 400
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":4,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":100}
+RespBody: {"message":"La categoría no existe o no pertenece a tu hogar."}
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":2,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":0}
+RespBody: {"idPresupuesto":5,"idHogar":1,"idCategoria":2,"montoLimite":0,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":2,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":-50}
+RespBody: {"idPresupuesto":6,"idHogar":1,"idCategoria":2,"montoLimite":-50,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"montoLimite":120,"idCategoria":2}
+RespBody: {"idPresupuesto":7,"idHogar":1,"idCategoria":2,"montoLimite":120,"mesAnio":"0001-01-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":1,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":301}
+RespBody: {"idPresupuesto":8,"idHogar":1,"idCategoria":1,"montoLimite":301,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+GET /api/Presupuestos -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: [{"idPresupuesto":2,"idHogar":1,"idCategoria":1,"montoLimite":100.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":4,"idHogar":1,"idCategoria":1,"montoLimite":300.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":5,"idHogar":1,"idCategoria":2,"montoLimite":0.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":6,"idHogar":1,"idCategoria":2,"montoLimite":-50.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":8,"idHogar":1,"idCategoria":1,"montoLimite":
+
+GET /api/Presupuestos?anio=2026&mes=9 -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: [{"idPresupuesto":2,"idHogar":1,"idCategoria":1,"montoLimite":100.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":4,"idHogar":1,"idCategoria":1,"montoLimite":300.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":5,"idHogar":1,"idCategoria":2,"montoLimite":0.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":6,"idHogar":1,"idCategoria":2,"montoLimite":-50.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":8,"idHogar":1,"idCategoria":1,"montoLimite":
+
+GET /api/Presupuestos?anio=2026 -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: [{"idPresupuesto":2,"idHogar":1,"idCategoria":1,"montoLimite":100.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":4,"idHogar":1,"idCategoria":1,"montoLimite":300.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":5,"idHogar":1,"idCategoria":2,"montoLimite":0.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":6,"idHogar":1,"idCategoria":2,"montoLimite":-50.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":8,"idHogar":1,"idCategoria":1,"montoLimite":
+
+GET /api/Presupuestos?mes=9 -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: [{"idPresupuesto":2,"idHogar":1,"idCategoria":1,"montoLimite":100.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":4,"idHogar":1,"idCategoria":1,"montoLimite":300.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":5,"idHogar":1,"idCategoria":2,"montoLimite":0.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":6,"idHogar":1,"idCategoria":2,"montoLimite":-50.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":8,"idHogar":1,"idCategoria":1,"montoLimite":
+
+GET /api/Presupuestos?anio=2027&mes=1 -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: []
+
+GET /api/Presupuestos/4 -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"idPresupuesto":4,"idHogar":1,"idCategoria":1,"montoLimite":300.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+GET /api/Presupuestos/1 -> 404
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-b8030cb8c386bf31e82a2033bb91fffd-6a6618c529203e9f-00"}
+
+PUT /api/Presupuestos/4 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":1,"mesAnio":"2026-10-01T00:00:00Z","montoLimite":250}
+
+GET /api/Presupuestos/4 -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"idPresupuesto":4,"idHogar":1,"idCategoria":1,"montoLimite":250.00,"mesAnio":"2026-10-01T00:00:00.0000000Z"}
+
+PUT /api/Presupuestos/4 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":3,"mesAnio":"2026-10-01T00:00:00Z","montoLimite":250}
+
+GET /api/Presupuestos/4 -> 200
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"idPresupuesto":4,"idHogar":1,"idCategoria":3,"montoLimite":250.00,"mesAnio":"2026-10-01T00:00:00.0000000Z"}
+
+PUT /api/Presupuestos/4 -> 400
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":4,"mesAnio":"2026-10-01T00:00:00Z","montoLimite":250}
+RespBody: {"message":"La categoría no existe o no pertenece a tu hogar."}
+
+PUT /api/Presupuestos/1 -> 404
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":4,"mesAnio":"2026-09-01T00:00:00Z","montoLimite":1}
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-7cface399d684d10f3c4eb206a3c7115-359bea27ff5035a2-00"}
+
+PUT /api/Presupuestos/4 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":3,"mesAnio":"2026-10-01T00:00:00Z","montoLimite":0}
+
+PUT /api/Presupuestos/4 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+ReqBody: {"idCategoria":3,"mesAnio":"2026-10-01T00:00:00Z","montoLimite":-10}
+
+DELETE /api/Presupuestos/4 -> 204
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+
+GET /api/Presupuestos/4 -> 404
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-0a80c4aef55f81f2be4d6e0dbf9f8a24-b812783e35c1366c-00"}
+
+DELETE /api/Presupuestos/1 -> 404
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-621a1b0aa2c2ca90e7ebdcc567f4aed2-dc91307cb6fb2879-00"}
+
+DELETE /api/Presupuestos/99999 -> 404
+Auth: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+RespBody: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.5","title":"Not Found","status":404,"traceId":"00-10c154c424f1dc2b356972b2cfb58e1d-7cb62c00c2e51c02-00"}
+

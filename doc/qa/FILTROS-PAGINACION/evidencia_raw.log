@@ -1,0 +1,205 @@
+=== Ejecucion Filtros/Paginacion 2026-09-23T17:27:48 ===
+POST /api/Auth/register -> 200
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI0IiwiaWRIb2dhciI6IjMiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImVtYWlsIjoiY2FybG9zLmZwLjIwMTJAZGVtby10ZXN0LmNvbSIsImV4cCI6MTc5MDIzNDg2OCwiaXNzIjoiUmVtZXNhU21hcnRTViIsImF1ZCI6IlJlb
+
+POST /api/Categorias -> 201
+RespBody: {"idCategoria":5,"idHogar":3,"nombre":"Alimentacion","tipo":"Gasto","icono":"manzana"}
+
+POST /api/Categorias -> 201
+RespBody: {"idCategoria":6,"idHogar":3,"nombre":"Salario","tipo":"Ingreso","icono":"moneda"}
+
+POST /api/Categorias -> 201
+RespBody: {"idCategoria":7,"idHogar":3,"nombre":"Transporte","tipo":"Gasto","icono":"bus"}
+
+POST /api/Auth/register -> 200
+RespBody: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOiI1IiwiaWRIb2dhciI6IjQiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImVtYWlsIjoibWFydGEuZnAuMjAxMkBkZW1vLXRlc3QuY29tIiwiZXhwIjoxNzkwMjM0ODY5LCJpc3MiOiJSZW1lc2FTbWFydFNWIiwiYXVkIjoiUmVtZ
+
+POST /api/Categorias -> 201
+RespBody: {"idCategoria":8,"idHogar":4,"nombre":"Educacion","tipo":"Gasto","icono":"libro"}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":1,"idHogar":4,"idUsuario":5,"idCategoria":8,"monto":999,"fecha":"2026-01-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":9,"idHogar":4,"idCategoria":8,"montoLimite":500,"mesAnio":"2026-06-01T00:00:00.0000000Z"}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":2,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":14,"fecha":"2026-06-02T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":3,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":27,"fecha":"2026-06-03T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":4,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":40,"fecha":"2026-06-04T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":5,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":53,"fecha":"2026-06-05T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":6,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":66,"fecha":"2026-06-06T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":7,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":79,"fecha":"2026-06-07T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":8,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":92,"fecha":"2026-06-08T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":9,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":105,"fecha":"2026-06-09T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":10,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":118,"fecha":"2026-06-10T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":11,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":131,"fecha":"2026-06-11T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":12,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":144,"fecha":"2026-06-12T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":13,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":157,"fecha":"2026-06-13T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":14,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":170,"fecha":"2026-06-14T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":15,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":183,"fecha":"2026-06-15T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":16,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":196,"fecha":"2026-06-16T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":17,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":209,"fecha":"2026-06-17T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":18,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":222,"fecha":"2026-06-18T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":19,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":235,"fecha":"2026-06-19T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":20,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":248,"fecha":"2026-06-20T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":21,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":261,"fecha":"2026-06-21T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":22,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":274,"fecha":"2026-06-22T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":23,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":287,"fecha":"2026-06-23T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":24,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":300,"fecha":"2026-06-24T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":25,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":313,"fecha":"2026-06-25T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":26,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":326,"fecha":"2026-06-26T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":27,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":339,"fecha":"2026-06-27T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":28,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":352,"fecha":"2026-06-28T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":29,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":365,"fecha":"2026-06-29T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":30,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":378,"fecha":"2026-06-30T00:00:00.0000000Z","tipo":"Ingreso","descripcion":null,"origenEmisora":null}
+
+POST /api/Movimientos -> 201
+RespBody: {"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":10,"idHogar":3,"idCategoria":6,"montoLimite":110,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":11,"idHogar":3,"idCategoria":7,"montoLimite":120,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":12,"idHogar":3,"idCategoria":5,"montoLimite":130,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":13,"idHogar":3,"idCategoria":6,"montoLimite":140,"mesAnio":"2026-09-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":14,"idHogar":3,"idCategoria":7,"montoLimite":150,"mesAnio":"2026-10-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":15,"idHogar":3,"idCategoria":5,"montoLimite":160,"mesAnio":"2026-10-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":16,"idHogar":3,"idCategoria":6,"montoLimite":170,"mesAnio":"2026-10-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":17,"idHogar":3,"idCategoria":7,"montoLimite":180,"mesAnio":"2026-11-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":18,"idHogar":3,"idCategoria":5,"montoLimite":190,"mesAnio":"2026-11-01T00:00:00.0000000Z"}
+
+POST /api/Presupuestos -> 201
+RespBody: {"idPresupuesto":19,"idHogar":3,"idCategoria":6,"montoLimite":200,"mesAnio":"2026-12-01T00:00:00.0000000Z"}
+
+POST /api/MetasAhorro -> 201
+RespBody: {"idMeta":1,"idHogar":3,"titulo":"Meta 1","montoObjetivo":600,"montoActual":0,"fechaLimite":"2026-12-31T00:00:00.0000000Z","estado":"En progreso"}
+
+POST /api/MetasAhorro -> 201
+RespBody: {"idMeta":2,"idHogar":3,"titulo":"Meta 2","montoObjetivo":700,"montoActual":0,"fechaLimite":"2026-12-31T00:00:00.0000000Z","estado":"En progreso"}
+
+POST /api/MetasAhorro -> 201
+RespBody: {"idMeta":3,"idHogar":3,"titulo":"Meta 3","montoObjetivo":800,"montoActual":0,"fechaLimite":"2026-12-31T00:00:00.0000000Z","estado":"En progreso"}
+
+GET /api/Movimientos -> 200
+RespBody: [{"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391.00,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null},{"idMovimiento":30,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":378.00,"fecha":"2026-06-30T00:00:00.0000000Z","tipo":"Ingre
+
+GET /api/Movimientos?categoriaId=5 -> 200
+RespBody: [{"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391.00,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null},{"idMovimiento":28,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":352.00,"fecha":"2026-06-28T00:00:00.0000000Z","tipo":"Ingre
+
+GET /api/Movimientos?categoriaId=99999 -> 200
+RespBody: []
+
+GET /api/Movimientos?tipo=Gasto -> 200
+RespBody: [{"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391.00,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null},{"idMovimiento":29,"idHogar":3,"idUsuario":4,"idCategoria":6,"monto":365.00,"fecha":"2026-06-29T00:00:00.0000000Z","tipo":"Gasto
+
+GET /api/Movimientos?tipo=gasto -> 200
+RespBody: []
+
+GET /api/Movimientos?categoriaId=5&tipo=Gasto -> 200
+RespBody: [{"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391.00,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null},{"idMovimiento":25,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":313.00,"fecha":"2026-06-25T00:00:00.0000000Z","tipo":"Gasto
+
+GET /api/Movimientos -> 200
+RespBody: [{"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391.00,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null},{"idMovimiento":30,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":378.00,"fecha":"2026-06-30T00:00:00.0000000Z","tipo":"Ingre
+
+GET /api/Presupuestos?anio=2026&mes=9 -> 200
+RespBody: [{"idPresupuesto":10,"idHogar":3,"idCategoria":6,"montoLimite":110.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":11,"idHogar":3,"idCategoria":7,"montoLimite":120.00,"mesAnio":"2026-09-01T00:00:00.0000000Z"},{"idPresupuesto":12,"idHogar":3,"idCategoria":5,"montoLimite":130.00,"mesAnio
+
+GET /api/Presupuestos?anio=2026 -> 200
+RespBody: [{"idPresupuesto":19,"idHogar":3,"idCategoria":6,"montoLimite":200.00,"mesAnio":"2026-12-01T00:00:00.0000000Z"},{"idPresupuesto":17,"idHogar":3,"idCategoria":7,"montoLimite":180.00,"mesAnio":"2026-11-01T00:00:00.0000000Z"},{"idPresupuesto":18,"idHogar":3,"idCategoria":5,"montoLimite":190.00,"mesAnio
+
+GET /api/Presupuestos?mes=9 -> 200
+RespBody: [{"idPresupuesto":19,"idHogar":3,"idCategoria":6,"montoLimite":200.00,"mesAnio":"2026-12-01T00:00:00.0000000Z"},{"idPresupuesto":17,"idHogar":3,"idCategoria":7,"montoLimite":180.00,"mesAnio":"2026-11-01T00:00:00.0000000Z"},{"idPresupuesto":18,"idHogar":3,"idCategoria":5,"montoLimite":190.00,"mesAnio
+
+GET /api/Presupuestos?anio=2027&mes=1 -> 200
+RespBody: []
+
+GET /api/Presupuestos -> 200
+RespBody: [{"idPresupuesto":19,"idHogar":3,"idCategoria":6,"montoLimite":200.00,"mesAnio":"2026-12-01T00:00:00.0000000Z"},{"idPresupuesto":17,"idHogar":3,"idCategoria":7,"montoLimite":180.00,"mesAnio":"2026-11-01T00:00:00.0000000Z"},{"idPresupuesto":18,"idHogar":3,"idCategoria":5,"montoLimite":190.00,"mesAnio
+
+GET /api/Movimientos?page=1&pageSize=10 -> 200
+RespBody: [{"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391.00,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null},{"idMovimiento":30,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":378.00,"fecha":"2026-06-30T00:00:00.0000000Z","tipo":"Ingre
+
+GET /api/Presupuestos?page=2&pageSize=5 -> 200
+RespBody: [{"idPresupuesto":19,"idHogar":3,"idCategoria":6,"montoLimite":200.00,"mesAnio":"2026-12-01T00:00:00.0000000Z"},{"idPresupuesto":17,"idHogar":3,"idCategoria":7,"montoLimite":180.00,"mesAnio":"2026-11-01T00:00:00.0000000Z"},{"idPresupuesto":18,"idHogar":3,"idCategoria":5,"montoLimite":190.00,"mesAnio
+
+GET /api/Categorias?page=1&pageSize=20 -> 200
+RespBody: [{"idCategoria":5,"idHogar":3,"nombre":"Alimentacion","tipo":"Gasto","icono":"manzana"},{"idCategoria":6,"idHogar":3,"nombre":"Salario","tipo":"Ingreso","icono":"moneda"},{"idCategoria":7,"idHogar":3,"nombre":"Transporte","tipo":"Gasto","icono":"bus"}]
+
+GET /api/MetasAhorro -> 200
+RespBody: [{"idMeta":1,"idHogar":3,"titulo":"Meta 1","montoObjetivo":600.00,"montoActual":0.00,"fechaLimite":"2026-12-31T00:00:00.0000000Z","estado":"En progreso"},{"idMeta":2,"idHogar":3,"titulo":"Meta 2","montoObjetivo":700.00,"montoActual":0.00,"fechaLimite":"2026-12-31T00:00:00.0000000Z","estado":"En prog
+
+GET /api/Movimientos?page=-1&pageSize=abc -> 200
+RespBody: [{"idMovimiento":31,"idHogar":3,"idUsuario":4,"idCategoria":5,"monto":391.00,"fecha":"2026-07-01T00:00:00.0000000Z","tipo":"Gasto","descripcion":null,"origenEmisora":null},{"idMovimiento":30,"idHogar":3,"idUsuario":4,"idCategoria":7,"monto":378.00,"fecha":"2026-06-30T00:00:00.0000000Z","tipo":"Ingre
+
