@@ -1,0 +1,138 @@
+﻿[
+    {
+        "ID":  "FP-01",
+        "Descripcion":  "Listar movimientos sin filtros",
+        "Esperado":  "200, 30, solo hogar, fecha desc",
+        "Obtenido":  "count=30 soloA=True orden=True",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-02",
+        "Descripcion":  "Filtrar por categoria",
+        "Esperado":  "200, solo cat alim",
+        "Obtenido":  "count=10 soloCat=True",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-03",
+        "Descripcion":  "Filtrar por categoria inexistente",
+        "Esperado":  "200 con lista vacia",
+        "Obtenido":  "count=0",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-04",
+        "Descripcion":  "Filtrar por tipo",
+        "Esperado":  "200, solo Gasto (15)",
+        "Obtenido":  "count=15 soloTipo=True",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-05",
+        "Descripcion":  "Filtrar por tipo en minusculas",
+        "Esperado":  "comportamiento real: vacio",
+        "Obtenido":  "count=0",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO: comparacion sensible a mayusculas"
+    },
+    {
+        "ID":  "FP-06",
+        "Descripcion":  "Filtro combinado categoria+tipo",
+        "Esperado":  "200, interseccion",
+        "Obtenido":  "count=5 ok=True",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-07",
+        "Descripcion":  "Aislamiento por hogar (movi ajeno sembrado en B)",
+        "Esperado":  "200, solo hogar A",
+        "Obtenido":  "count=30 soloHogar=True",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-08",
+        "Descripcion":  "Filtrar por anio y mes",
+        "Esperado":  "200, solo 2026-09",
+        "Obtenido":  "count=4 soloMes=True",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-09",
+        "Descripcion":  "Filtrar solo por anio",
+        "Esperado":  "comportamiento real: todos (10)",
+        "Obtenido":  "count=10",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO: filtro se ignora sin mes"
+    },
+    {
+        "ID":  "FP-10",
+        "Descripcion":  "Filtrar solo por mes",
+        "Esperado":  "comportamiento real: todos (10)",
+        "Obtenido":  "count=10",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO: filtro se ignora sin anio"
+    },
+    {
+        "ID":  "FP-11",
+        "Descripcion":  "Filtrar sin coincidencias",
+        "Esperado":  "200, lista vacia",
+        "Obtenido":  "count=0",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-12",
+        "Descripcion":  "Aislamiento por hogar y orden MesAnio desc",
+        "Esperado":  "200, 10, solo hogar, desc",
+        "Obtenido":  "count=10 soloHogar=True orden=True",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "FP-13",
+        "Descripcion":  "Movimientos con page/pageSize",
+        "Esperado":  "comportamiento real: todos (30)",
+        "Obtenido":  "count=30",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO: sin paginacion, params ignorados"
+    },
+    {
+        "ID":  "FP-14",
+        "Descripcion":  "Presupuestos con page/pageSize",
+        "Esperado":  "comportamiento real: todos (10)",
+        "Obtenido":  "count=10",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO"
+    },
+    {
+        "ID":  "FP-15",
+        "Descripcion":  "Categorias con page/pageSize",
+        "Esperado":  "comportamiento real: todas (3)",
+        "Obtenido":  "count=3 soloHogar=True",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO"
+    },
+    {
+        "ID":  "FP-16",
+        "Descripcion":  "Metas de ahorro (3 sembradas)",
+        "Esperado":  "200, las 3 completas",
+        "Obtenido":  "count=3",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO: no hay total/paginas en la respuesta"
+    },
+    {
+        "ID":  "FP-17",
+        "Descripcion":  "Params invalidos de paginacion",
+        "Esperado":  "200 (todos) o 400 (binding)",
+        "Obtenido":  "HTTP 200 count=30",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO: no existe contrato de paginacion"
+    }
+]

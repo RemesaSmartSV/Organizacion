@@ -158,7 +158,7 @@ Write-Output '===== SECCION 3: Consulta ====='
 
 # --- CP-14: Listar todos del hogar ---
 $r = Invoke-Api 'GET' '/api/Presupuestos' $null $tokenA
-$lista = @($r.Body | ConvertFrom-Json)
+$lista = @($r.Body | ConvertFrom-Json | ForEach-Object { $_ })
 $soloA = ($lista | Where-Object { [int]$_.idHogar -ne $idHogarA }).Count -eq 0
 $meses = @($lista | ForEach-Object { $_.mesAnio })
 $ordenDesc = $true
@@ -167,23 +167,23 @@ Add-Resultado 'CP-14' 'Listar todos los presupuestos del hogar' '200 solo hogar,
 
 # --- CP-15: Filtrar por anio y mes ---
 $r = Invoke-Api 'GET' '/api/Presupuestos?anio=2026&mes=9' $null $tokenA
-$filt9 = @($r.Body | ConvertFrom-Json)
+$filt9 = @($r.Body | ConvertFrom-Json | ForEach-Object { $_ })
 $todosSep = ($filt9 | Where-Object { $_.mesAnio -notmatch '^2026-09' }).Count -eq 0
 Add-Resultado 'CP-15' 'Filtrar por anio+mes' '200 solo 2026-09' $r.Code (($r.Code -eq 200) -and $todosSep) "count=$($filt9.Count)"
 
 # --- CP-16: Solo anio (el filtro se ignora) ---
 $r = Invoke-Api 'GET' '/api/Presupuestos?anio=2026' $null $tokenA
-$soloAnio = @($r.Body | ConvertFrom-Json).Count
+$soloAnio = @($r.Body | ConvertFrom-Json | ForEach-Object { $_ }).Count
 Add-Resultado 'CP-16' 'Filtrar solo por anio' 'comportamiento real: 200 con todos' $r.Code (($r.Code -eq 200) -and ($soloAnio -gt $filt9.Count)) "count=$soloAnio (filtro ignorado; CONFIRMAR-CON-EQUIPO)"
 
 # --- CP-17: Solo mes (el filtro se ignora) ---
 $r = Invoke-Api 'GET' '/api/Presupuestos?mes=9' $null $tokenA
-$soloMes = @($r.Body | ConvertFrom-Json).Count
+$soloMes = @($r.Body | ConvertFrom-Json | ForEach-Object { $_ }).Count
 Add-Resultado 'CP-17' 'Filtrar solo por mes' 'comportamiento real: 200 con todos' $r.Code (($r.Code -eq 200) -and ($soloMes -gt $filt9.Count)) "count=$soloMes (filtro ignorado; CONFIRMAR-CON-EQUIPO)"
 
 # --- CP-18: Sin coincidencias ---
 $r = Invoke-Api 'GET' '/api/Presupuestos?anio=2027&mes=1' $null $tokenA
-$vac = @($r.Body | ConvertFrom-Json).Count
+$vac = @($r.Body | ConvertFrom-Json | ForEach-Object { $_ }).Count
 Add-Resultado 'CP-18' 'Filtrar sin coincidencias' '200 lista vacia' $r.Code (($r.Code -eq 200) -and ($vac -eq 0)) "count=$vac"
 
 # --- CP-19: Por id propio y ajeno ---

@@ -40,7 +40,7 @@ function Add-Resultado([string]$Id, [string]$Desc, $Esperado, $Obtenido, [bool]$
     Write-Output ("{0} {1,-7} esperado={2,-22} obtenido={3,-18} {4}" -f $icon, $Id, $Esperado, $Obtenido, $Obs)
 }
 
-function New-Lista($Body) { @($Body | ConvertFrom-Json) }
+function New-Lista($Body) { @($Body | ConvertFrom-Json | ForEach-Object { $_ }) }
 
 Write-Output '===== SETUP ====='
 

@@ -1,0 +1,218 @@
+﻿[
+    {
+        "ID":  "CP-01",
+        "Descripcion":  "Crear presupuesto sin token",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-02",
+        "Descripcion":  "Listar presupuestos sin token",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-03",
+        "Descripcion":  "Crear con token alterado (firma invalida)",
+        "Esperado":  "401 Unauthorized",
+        "Obtenido":  401,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-04",
+        "Descripcion":  "Consultar presupuesto de otro hogar (id=1)",
+        "Esperado":  "404 NotFound",
+        "Obtenido":  404,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-05",
+        "Descripcion":  "Inyectar idHogar ajeno en el body",
+        "Esperado":  "201 y idHogar=1 (del token)",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idHogar response=1"
+    },
+    {
+        "ID":  "CP-06",
+        "Descripcion":  "Operar como rol Miembro (crear/editar/eliminar)",
+        "Esperado":  "comportamiento real 201/204/204",
+        "Obtenido":  "201/204/204",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO: si solos Admins, seria FALLO (bug de permisos)"
+    },
+    {
+        "ID":  "CP-07",
+        "Descripcion":  "Crear presupuesto valido",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "id=4"
+    },
+    {
+        "ID":  "CP-08",
+        "Descripcion":  "Crear con categoria inexistente",
+        "Esperado":  "400 BadRequest",
+        "Obtenido":  400,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"message\":\"La categoría no existe o no pertenece a tu hogar.\"}"
+    },
+    {
+        "ID":  "CP-09",
+        "Descripcion":  "Crear con categoria de otro hogar",
+        "Esperado":  "400 BadRequest",
+        "Obtenido":  400,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"message\":\"La categoría no existe o no pertenece a tu hogar.\"}"
+    },
+    {
+        "ID":  "CP-10",
+        "Descripcion":  "Crear con MontoLimite=0",
+        "Esperado":  "comportamiento real: 201",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO si el limite debe ser \u003e 0"
+    },
+    {
+        "ID":  "CP-11",
+        "Descripcion":  "Crear con MontoLimite negativo",
+        "Esperado":  "comportamiento real: 201",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO"
+    },
+    {
+        "ID":  "CP-12",
+        "Descripcion":  "Crear sin MesAnio",
+        "Esperado":  "comportamiento real: 201 con 0001-01-01",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "mesAnio=0001-01-01T00:00:00.0000000Z (CONFIRMAR-CON-EQUIPO si es obligatorio)"
+    },
+    {
+        "ID":  "CP-13",
+        "Descripcion":  "Crear duplicado (misma categoria y mes)",
+        "Esperado":  "comportamiento real: 201",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO si debe ser unico por categoria+mes"
+    },
+    {
+        "ID":  "CP-14",
+        "Descripcion":  "Listar todos los presupuestos del hogar",
+        "Esperado":  "200 solo hogar, MesAnio desc",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "count=6"
+    },
+    {
+        "ID":  "CP-15",
+        "Descripcion":  "Filtrar por anio+mes",
+        "Esperado":  "200 solo 2026-09",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "count=5"
+    },
+    {
+        "ID":  "CP-16",
+        "Descripcion":  "Filtrar solo por anio",
+        "Esperado":  "comportamiento real: 200 con todos",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "count=6 (filtro ignorado; CONFIRMAR-CON-EQUIPO)"
+    },
+    {
+        "ID":  "CP-17",
+        "Descripcion":  "Filtrar solo por mes",
+        "Esperado":  "comportamiento real: 200 con todos",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "count=6 (filtro ignorado; CONFIRMAR-CON-EQUIPO)"
+    },
+    {
+        "ID":  "CP-18",
+        "Descripcion":  "Filtrar sin coincidencias",
+        "Esperado":  "200 lista vacia",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "count=0"
+    },
+    {
+        "ID":  "CP-19",
+        "Descripcion":  "Por id propio y ajeno",
+        "Esperado":  "200 propio / 404 ajeno",
+        "Obtenido":  "200/404",
+        "Resultado":  "PASO",
+        "Observaciones":  "propio=200 ajeno=404"
+    },
+    {
+        "ID":  "CP-20",
+        "Descripcion":  "Editar MontoLimite y MesAnio (Admin)",
+        "Esperado":  "204 y cambios verificados",
+        "Obtenido":  204,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-21",
+        "Descripcion":  "Cambiar a otra categoria del mismo hogar",
+        "Esperado":  "204 y categoria actualizada",
+        "Obtenido":  204,
+        "Resultado":  "PASO",
+        "Observaciones":  "idCategoria=3"
+    },
+    {
+        "ID":  "CP-22",
+        "Descripcion":  "Cambiar a categoria de otro hogar",
+        "Esperado":  "400 BadRequest",
+        "Obtenido":  400,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"message\":\"La categoría no existe o no pertenece a tu hogar.\"}"
+    },
+    {
+        "ID":  "CP-23",
+        "Descripcion":  "Editar presupuesto de otro hogar",
+        "Esperado":  "404 NotFound",
+        "Obtenido":  404,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-24",
+        "Descripcion":  "Editar con MontoLimite 0 / negativo",
+        "Esperado":  "comportamiento real: 204/204",
+        "Obtenido":  "204/204",
+        "Resultado":  "PASO",
+        "Observaciones":  "CONFIRMAR-CON-EQUIPO si el limite debe ser \u003e 0"
+    },
+    {
+        "ID":  "CP-25",
+        "Descripcion":  "Eliminar presupuesto propio",
+        "Esperado":  "204 y 404 al reconsultar",
+        "Obtenido":  "204/404",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-26",
+        "Descripcion":  "Eliminar presupuesto de otro hogar",
+        "Esperado":  "404 NotFound",
+        "Obtenido":  404,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "ID":  "CP-27",
+        "Descripcion":  "Eliminar presupuesto inexistente",
+        "Esperado":  "404 NotFound",
+        "Obtenido":  404,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    }
+]

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\backend\RemesaSmartSV.csproj" />
+    <ProjectReference Include="..\backend\RemesaSmartSV.csproj" />
   </ItemGroup>
 
   <ItemGroup>
