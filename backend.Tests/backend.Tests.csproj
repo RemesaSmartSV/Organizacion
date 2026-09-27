@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <BackendProjectPath Condition="'$(BackendProjectPath)' == ''">$(MSBuildThisFileDirectory)..\backend\RemesaSmartSV.csproj</BackendProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,8 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\backend\RemesaSmartSV.csproj" />
+    <ProjectReference Include="$(BackendProjectPath)" />
   </ItemGroup>
+
+  <Target Name="VerifyBackendProject" BeforeTargets="ResolveProjectReferences" Condition="!Exists('$(BackendProjectPath)')">
+    <Error Text="No se encontro el proyecto del backend en '$(BackendProjectPath)'. Este repositorio contiene solo las pruebas: cloná RemesaSmartSV/backend como carpeta hermana (../backend) o indicá la ruta con -p:BackendProjectPath=&quot;C:\ruta\RemesaSmartSV.csproj&quot;." />
+  </Target>
 
   <ItemGroup>
     <Using Include="Xunit" />

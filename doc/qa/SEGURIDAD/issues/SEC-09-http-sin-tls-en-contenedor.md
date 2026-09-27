@@ -38,7 +38,7 @@ docker compose -f backend\docker-compose.yml logs backend_api | Select-String "H
 # warn: Failed to determine the https port for redirect.
 
 # 3. La base de datos es alcanzable desde el host, sin TLS
-psql "host=localhost;port=5432;dbname=RemesaSmartDB;user=postgres;password=SecretPassword123!" -c "select 1"
+psql "host=localhost;port=5432;dbname=RemesaSmartDB;user=postgres;password=<POSTGRES_PASSWORD>" -c "select 1"
 ```
 
 ## Comportamiento esperado

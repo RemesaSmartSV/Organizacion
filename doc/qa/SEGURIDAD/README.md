@@ -15,7 +15,7 @@
 | Hallazgo | Área | Resumen | Severidad |
 |----------|------|---------|-----------|
 | [SEC-01](issues/SEC-01-clave-jwt-hardcodeada.md) | Secretos | `Jwt:Key` en texto plano en `appsettings.json` versionado → se pueden firmar tokens `Admin` de cualquier hogar | 🔴 Crítica |
-| [SEC-02](issues/SEC-02-contrasena-postgres-hardcodeada.md) | Secretos | Contraseña `SecretPassword123!` en `docker-compose.yml`, reutilizada por la API y con `5432:5432` publicado | 🔴 Crítica |
+| [SEC-02](issues/SEC-02-contrasena-postgres-hardcodeada.md) | Secretos | Contraseña `<POSTGRES_PASSWORD>` en `docker-compose.yml`, reutilizada por la API y con `5432:5432` publicado | 🔴 Crítica |
 | [SEC-03](issues/SEC-03-sin-cabeceras-de-seguridad.md) | Cabeceras | No hay ni una cabecera de seguridad (ni HSTS, ni `nosniff`, ni CSP) | 🟠 Alta |
 | [SEC-04](issues/SEC-04-sin-rate-limit-en-login.md) | JWT | Login y registro sin rate limiting ni bloqueo de cuenta (contraseñas de 6 caracteres) | 🟠 Alta |
 | [SEC-05](issues/SEC-05-campos-texto-sin-saneamiento.md) | XSS | Texto libre sin sanear (riesgo de XSS almacenado en el frontend) y `Contenido` sin límite de longitud | 🟡 Media |

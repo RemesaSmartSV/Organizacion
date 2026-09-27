@@ -13,7 +13,7 @@
 | # | Hallazgo | Área | Severidad | CWE | Issue |
 |---|----------|------|-----------|-----|-------|
 | SEC-01 | Clave de firma JWT en texto plano y versionada en `appsettings.json` | Secretos | 🔴 Crítica | CWE-798 | [issue](issues/SEC-01-clave-jwt-hardcodeada.md) |
-| SEC-02 | Contraseña de PostgreSQL `SecretPassword123!` en `docker-compose.yml`, reutilizada por la API y con el puerto 5432 publicado | Secretos | 🔴 Crítica | CWE-798 | [issue](issues/SEC-02-contrasena-postgres-hardcodeada.md) |
+| SEC-02 | Contraseña de PostgreSQL `<POSTGRES_PASSWORD>` en `docker-compose.yml`, reutilizada por la API y con el puerto 5432 publicado | Secretos | 🔴 Crítica | CWE-798 | [issue](issues/SEC-02-contrasena-postgres-hardcodeada.md) |
 | SEC-03 | Ninguna cabecera de seguridad configurada (sin `nosniff`, CSP, `X-Frame-Options`, `Referrer-Policy`, HSTS) | Cabeceras | 🟠 Alta | CWE-693 | [issue](issues/SEC-03-sin-cabeceras-de-seguridad.md) |
 | SEC-04 | Sin rate limiting ni bloqueo de cuenta en login/registro | Tokens JWT | 🟠 Alta | CWE-307 | [issue](issues/SEC-04-sin-rate-limit-en-login.md) |
 | SEC-05 | `EducacionFinanciera.Contenido` sin límite de longitud ni validación de contenido; el resto de campos de texto se persisten y se devuelven sin transformar | XSS | 🟡 Media | CWE-20 / CWE-79 | [issue](issues/SEC-05-campos-texto-sin-saneamiento.md) |
@@ -55,7 +55,7 @@
 
 ### Lo que falta
 
-- **SEC-01 — la clave que valida todo lo anterior está en el repo.** `appsettings.json:15` fija `Jwt:Key = RemesaSmartSV_Clave_Dev_2026_#Segura#`. Cualquiera con lectura del repositorio puede **firmar un token con `Rol=Admin` e `idHogar` arbitrario** y acceder a los datos de cualquier hogar. La validación de firma solo protege frente a quien *no* conoce la clave. Mitigación: `dotnet user-secrets set "Jwt:Key" ...` o variable de entorno `Jwt__Key`, con placeholder no secreto en el archivo versionado; y **rotar** la clave (invalida los tokens emitidos, que es deseable).
+- **SEC-01 — la clave que valida todo lo anterior está en el repo.** `appsettings.json:15` fija un `Jwt:Key` real (`<JWT_KEY>`). Cualquiera con lectura del repositorio puede **firmar un token con `Rol=Admin` e `idHogar` arbitrario** y acceder a los datos de cualquier hogar. La validación de firma solo protege frente a quien *no* conoce la clave. Mitigación: `dotnet user-secrets set "Jwt:Key" ...` o variable de entorno `Jwt__Key`, con placeholder no secreto en el archivo versionado; y **rotar** la clave (invalida los tokens emitidos, que es deseable).
 - **SEC-04 — sin limitación de intentos.** `AuthController.Login` (`:26-27`) es público y no hay `AddRateLimiter`, ni contador de intentos fallidos, ni bloqueo de cuenta. Permite fuerza bruta y relleno de credenciales sobre contraseñas de 6 caracteres (`AuthDtos.cs:6`).
 - **SEC-07 — sin revocación.** No hay claim `jti` ni lista de revocación: un token robado sirve hasta 8 h. Tampoco hay refresh token, ni `ClockSkew = TimeSpan.Zero` explícito, por lo que un token vencido hace < 5 min **todavía se acepta** (`Vuln_SEC07_UnTokenVencidoHaceMenosDeCincoMinutos...`). Consecuencia funcional: cambiar el rol de un usuario o su contraseña no surte efecto hasta que expire su token.
 - **Nota menor (fuera de alcance de este issue):** el claim de rol se serializa con el URI largo de Microsoft en lugar de `role`, y falta `iat`. Ya reportado en [BUG-01 de HU-01](../HU01/issues/BUG-01-jwt-sin-claim-role-corto.md); no se vuelve a reportar aquí.
@@ -110,9 +110,9 @@ Razón: CSRF explota la **adjunción automática** de credenciales por el navega
 
 | Secreto | Dónde | Estado |
 |---------|-------|--------|
-| `Jwt:Key` = `RemesaSmartSV_Clave_Dev_2026_#Segura#` | `appsettings.json:15` (archivo **versionado**) | 🔴 **SEC-01** |
-| `POSTGRES_PASSWORD: SecretPassword123!` | `docker-compose.yml:12` (versionado) | 🔴 **SEC-02** |
-| `Password=SecretPassword123!` en la cadena de conexión del servicio `backend_api` | `docker-compose.yml:31` (misma clave reutilizada) | 🔴 **SEC-02** |
+| `Jwt:Key` = `<JWT_KEY>` | `appsettings.json:15` (archivo **versionado**) | 🔴 **SEC-01** |
+| Contraseña de PostgreSQL en texto plano (`<POSTGRES_PASSWORD>`) | `docker-compose.yml:12` (versionado) | 🔴 **SEC-02** |
+| La misma clave reutilizada en la cadena de conexión (`Password=<POSTGRES_PASSWORD>`) | `docker-compose.yml:31` | 🔴 **SEC-02** |
 | `"Password="` (vacío) en la cadena de conexión de `appsettings.json:10` | placeholder | 🟡 Si se despliega sin *user-secrets*, la app intenta conectar **sin contraseña** en lugar de fallar (falla ruidosa solo si Postgres la exige). |
 | `AllowedHosts: "*"` | `appsettings.json:8` | 🟢 SEC-10 |
 | Contraseñas de ejemplo `Clave12345` | `backend/RemesaSmartSV.http`, README | 🟢 solo desarrollo, sin valor real |

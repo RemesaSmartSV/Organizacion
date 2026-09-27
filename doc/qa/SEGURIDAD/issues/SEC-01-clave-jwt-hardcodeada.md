@@ -16,7 +16,7 @@ La clave simétrica con la que la API firma y valida los JWT está escrita en un
 
 `backend/appsettings.json:15`
 ```json
-"Key": "RemesaSmartSV_Clave_Dev_2026_#Segura#"
+"Key": "<JWT_KEY>"
 ```
 
 Toda la validación de tokens depende de que esta clave sea secreta. Con ella, cualquier persona con acceso de lectura al repositorio (o cualquier clon del repo, o cualquier copia del `zip` que se comparta) puede **fabricar un token válido con el rol que quiera** y acceder a los datos de cualquier hogar, sin conocer ninguna contraseña.
@@ -36,12 +36,12 @@ Además, el `docker-compose.yml` **no inyecta `Jwt__Key`**, así que el contened
 ```powershell
 # 1. Leer la clave del repositorio (no hace falta ningún privilegio especial)
 Get-Content backend\appsettings.json | ConvertFrom-Json | % Jwt.Key
-# RemesaSmartSV_Clave_Dev_2026_#Segura#
+# <JWT_KEY>
 ```
 
 ```powershell
 # 2. Fabricar un token Admin para el hogar 1 con esa clave
-$clave = "RemesaSmartSV_Clave_Dev_2026_#Segura#"
+$clave = "<JWT_KEY>"
 $header  = '{"alg":"HS256","typ":"JWT"}' | ForEach-Object { [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($_)).TrimEnd('=').Replace('+','-').Replace('/','_') }
 $payload = '{"idUsuario":"1","idHogar":"1","http://schemas.microsoft.com/ws/2008/06/identity/claims/role":"Admin","email":"admin@remesasmart.sv","iss":"RemesaSmartSV","aud":"RemesaSmartSVClient","exp":1893456000}' | ForEach-Object { [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($_)).TrimEnd('=').Replace('+','-').Replace('/','_') }
 $firma = [Convert]::ToBase64String((New-Object Security.Cryptography.HMACSHA256 ([Text.Encoding]::UTF8.GetBytes($clave))).ComputeHash([Text.Encoding]::UTF8.GetBytes("$header.$payload"))).TrimEnd('=').Replace('+','-').Replace('/','_')

@@ -5,7 +5,7 @@
 ---
 
 ## Título
-**[Security][Crítico] Contraseña de PostgreSQL `SecretPassword123!` hardcodeada en `docker-compose.yml`, reutilizada por la API y con el puerto 5432 publicado al host**
+**[Security][Crítico] Contraseña de PostgreSQL `<POSTGRES_PASSWORD>` hardcodeada en `docker-compose.yml`, reutilizada por la API y con el puerto 5432 publicado al host**
 
 ## Labels sugeridos
 `security` · `secrets` · `docker` · `prioridad: crítica`
@@ -16,12 +16,12 @@ El `docker-compose.yml` del backend declara credenciales de la base de datos **e
 
 `backend/docker-compose.yml:12`
 ```yaml
-POSTGRES_PASSWORD: SecretPassword123!
+POSTGRES_PASSWORD: <POSTGRES_PASSWORD>
 ```
 
 `backend/docker-compose.yml:31`
 ```yaml
-- ConnectionStrings__DefaultConnection=Host=postgres_db;Port=5432;Database=RemesaSmartDB;Username=postgres;Password=SecretPassword123!
+- ConnectionStrings__DefaultConnection=Host=postgres_db;Port=5432;Database=RemesaSmartDB;Username=postgres;Password=<POSTGRES_PASSWORD>
 ```
 
 `backend/docker-compose.yml:14` publica el puerto de la base de datos al host:
@@ -46,8 +46,8 @@ Select-String -Path backend\docker-compose.yml -Pattern "POSTGRES_PASSWORD|Passw
 ```powershell
 # 2. Conectar a la base del entorno levantado por el compose, usando la credencial del repo
 docker compose -f backend\docker-compose.yml up -d postgres_db
-psql "host=localhost;port=5432;dbname=RemesaSmartDB;user=postgres;password=SecretPassword123!" -c "\dt"
-psql "host=localhost;port=5432;dbname=RemesaSmartDB;user=postgres;password=SecretPassword123!" -c "select \"Correo\", \"Rol\" from \"Usuarios\";"
+psql "host=localhost;port=5432;dbname=RemesaSmartDB;user=postgres;password=<POSTGRES_PASSWORD>" -c "\dt"
+psql "host=localhost;port=5432;dbname=RemesaSmartDB;user=postgres;password=<POSTGRES_PASSWORD>" -c "select \"Correo\", \"Rol\" from \"Usuarios\";"
 ```
 
 ## Comportamiento esperado

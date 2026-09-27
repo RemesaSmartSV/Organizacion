@@ -656,7 +656,9 @@ public class SeguridadConfiguracionTests
         var clave = documento.RootElement.GetProperty("Jwt").GetProperty("Key").GetString();
 
         Assert.False(string.IsNullOrWhiteSpace(clave));
-        Assert.StartsWith("RemesaSmartSV_Clave_Dev", clave);
+        Assert.DoesNotContain("${", clave, StringComparison.Ordinal);
+        Assert.DoesNotContain("CHANGE_ME", clave, StringComparison.OrdinalIgnoreCase);
+        Assert.True(clave.Length >= 32, "La clave de firma del Jwt deberia tener al menos 32 caracteres para HS256.");
     }
 
     [Fact]
@@ -664,8 +666,16 @@ public class SeguridadConfiguracionTests
     {
         var compose = SeguridadArchivos.Backend("docker-compose.yml");
 
-        Assert.Contains("POSTGRES_PASSWORD: SecretPassword123!", compose, StringComparison.Ordinal);
-        Assert.Contains("Password=SecretPassword123!", compose, StringComparison.Ordinal);
+        var password = compose
+            .Split('\n')
+            .Select(linea => linea.Split(':', 2))
+            .Where(pares => pares.Length == 2 && pares[0].Contains("POSTGRES_PASSWORD", StringComparison.Ordinal))
+            .Select(pares => pares[1].Trim())
+            .Single();
+
+        Assert.False(string.IsNullOrWhiteSpace(password));
+        Assert.DoesNotContain("${", password, StringComparison.Ordinal);
+        Assert.Contains($"Password={password}", compose, StringComparison.Ordinal);
         Assert.Contains("\"5432:5432\"", compose, StringComparison.Ordinal);
     }
 

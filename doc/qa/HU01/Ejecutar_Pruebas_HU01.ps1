@@ -51,7 +51,11 @@ function ConvertFrom-B64Url([string]$s) {
 
 function New-JwtFirmado {
     param([hashtable]$Claims, [int]$VidaSegundos = 28800)
-    $jwtKey = 'RemesaSmartSV_Clave_Dev_2026_#Segura#'   # appsettings.json (entorno dev)
+    $jwtKey = $env:Jwt__Key
+    if ([string]::IsNullOrWhiteSpace($jwtKey)) { $jwtKey = $env:REMESASMART_JWT_KEY }
+    if ([string]::IsNullOrWhiteSpace($jwtKey)) {
+        throw 'Falta la clave de firma del Jwt. Defina la variable de entorno Jwt__Key con el valor de su appsettings local (no se versiona, ver SEC-01).'
+    }
     $now = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
     $Claims.exp = $now + $VidaSegundos
     $Claims.iat = $now
