@@ -1,6 +1,6 @@
 # Reporte de Pruebas — RemesaSmartSV
 
-**Fecha:** 23 de septiembre de 2026 (última corrida integrada — suites de API con Docker)
+**Fecha:** 27 de septiembre de 2026 (última corrida: auditoría de seguridad básica — issue #76)
 **Proyecto:** RemesaSmartSV — Aplicación de finanzas familiares y remesas
 **Responsable:** Emelie López (documentación) / Branham Alabi (ejecución QA)
 
@@ -10,13 +10,15 @@
 
 | Componente | Framework | Tests | Pasaron | Fallaron | Estado |
 |---|---|---|---|---|---|
-| Backend (xUnit) | xUnit 2.9.3 + EF Core InMemory | 52 | 52 | 0 | ✅ |
+| Backend (xUnit) | xUnit 2.9.3 + EF Core InMemory | 94 | 94 | 0 | ✅ |
+| └ Funcional QA previa | xUnit 2.9.3 | 52 | 52 | 0 | ✅ |
+| └ **Seguridad (issue #76)** | xUnit 2.9.3 + `JwtSecurityTokenHandler` + reflexión | **42** | **42** | **0** | ⚠️ **10 hallazgos (2 críticos)** |
 | HU-01 (Auth/Hogares/Usuarios · API) | PowerShell + HTTP (Docker) | 27 | 25 | 2 | ⚠️ 2 bugs abiertos (BUG-01, BUG-02) |
 | HU-05 (Presupuestos · API) | PowerShell + HTTP (Docker) | 27 | 27 | 0 | ✅ |
 | Filtros/Paginación (API) | PowerShell + HTTP (Docker) | 17 | 17 | 0 | ✅ |
 | Performance (API) | PowerShell + HTTP (Docker) | 8 | 7 | 0 | ✅ (1 SALTADO opcional) |
 | Frontend (Vitest) | Vitest + React Testing Library | — | — | — | ⏸️ Pendiente (Node no instalado) |
-| **Total** | | **131** | **128** | **2** | **⚠️** |
+| **Total** | | **173** | **170** | **2** | **⚠️** |
 
 > **Nota:** los tests de frontend (Vitest) no se ejecutaron porque Node.js no está
 > instalado en el entorno (reporte previo: 2 casos de `App.test.jsx` pendientes).
@@ -35,10 +37,11 @@
 
 - **Framework:** xUnit 2.9.3
 - **Base de datos:** Microsoft.EntityFrameworkCore.InMemory 8.0.30
-- **Autenticación:** ClaimsPrincipal mock (idHogar / idUsuario según cada suite)
+- **Autenticación:** ClaimsPrincipal mock (idHogar / idUsuario según cada suite) + validación real de JWT con `JwtSecurityTokenHandler`
 - **Proyecto de tests (reproducible):** `backend.Tests/` (referencia a `backend/RemesaSmartSV.csproj`)
 - **Comando:** `dotnet test backend.Tests\backend.Tests.csproj`
-- **Resultado:** 52/52 correctos, 0 fallos, 0 omitidos (duración 8 s)
+- **Resultado:** 94/94 correctos, 0 fallos, 0 omitidos (duración ~9 s) — 52 de la suite funcional previa + 42 de seguridad
+- **Entrega de seguridad:** `doc/qa/SEGURIDAD/` (informe, 42 casos, 10 issues, CSV/JSON, log)
 
 ### AuthServiceTests (9 tests)
 
@@ -116,6 +119,23 @@
 | 50 | `GetMovimientos_ConFiltroYDiezMilRegistros_RespondeEnMenosDeCincoSegundos` | Filtro sobre 10000 registros en < 5 s | ✅ Pass |
 | 51 | `Create_MilMovimientosSecuenciales_TardaMenosDeDiezSegundos` | 1000 creates secuenciales en < 10 s | ✅ Pass |
 | 52 | `GetPresupuestos_ConDosMilRegistros_RespondeEnMenosDeCincoSegundos` | 2000 presupuestos filtrados en < 5 s | ✅ Pass |
+
+### SeguridadTests (42 tests — issue #76)
+
+Detalle completo en `doc/qa/SEGURIDAD/Casos_Prueba_Seguridad.md` (CP-S-01..CP-S-42, agrupados por área temática).
+Esta tabla agrupa por **clase de test**; el documento de casos agrupa temáticamente (12 en CSRF/Autorización y 10 en Cabeceras, porque tres tests de configuración —CORS, orden del pipeline, bearer sin cookies— son de CSRF/autorización). Los 42 son los mismos.
+Convención: los tests con prefijo `Vuln_SECxx_` **afirman que la vulnerabilidad sigue presente** y
+pasarán a rojo cuando se corrija el hallazgo; el resto son controles que deben seguir en verde.
+
+| # | Suite | Tests | Qué cubre | Resultado |
+|---|-------|-------|-----------|-----------|
+| 53-62 | `SeguridadJwtTests` | 10 | Validación de firma/`iss`/`aud`/vigencia, rechazo de token falsificado, vida de 8 h, `jti` ausente (**SEC-07**), `ClockSkew` de 5 min (**SEC-07**) | 10/10 ✅ |
+| 63-67 | `SeguridadContrasenasTests` | 5 | PBKDF2 + sal, hash por usuario, rechazo de clave incorrecta, `ContrasenaHash` nunca serializado | 5/5 ✅ |
+| 68-76 | `SeguridadAutorizacionTests` | 9 | Sin cookies/antiforgery (**CSRF**), CORS sin wildcard ni credenciales, orden del pipeline, superficie anónima (4 endpoints), `Roles="Admin"` en operaciones críticas, `IdHogar` del token (anti-IDOR), `Rol` sin lista blanca (**SEC-06**) | 9/9 ✅ |
+| 77-81 | `SeguridadXssTests` | 5 | Payload `<script>` persistido sin sanear (**SEC-05**), escape JSON (`\u003C`), tips como datos y no HTML, límites de longitud, `Contenido` sin cota (**SEC-05**) | 5/5 ✅ |
+| 82-94 | `SeguridadConfiguracionTests` | 13 | `Validate*` del JWT activos, sin SQL crudo, **clave JWT versionada (SEC-01)**, **contraseña BD versionada (SEC-02)**, **sin cabeceras (SEC-03)**, **sin rate limit (SEC-04)**, compose en `Development` (**SEC-08**), sin TLS (**SEC-09**), CI sin escaneo de secretos ni tests (**SEC-10**) | 13/13 ✅ |
+
+**Hallazgos de seguridad:** 2 críticos (SEC-01, SEC-02) · 2 altos (SEC-03, SEC-04) · 5 medios (SEC-05..SEC-09) · 1 baja (SEC-10) — issues en `doc/qa/SEGURIDAD/issues/`.
 
 ---
 
@@ -203,10 +223,12 @@ requiere `-Movimientos 10000`.
 
 | Módulo | Suite | Tests | Cobertura estimada |
 |---|---|---|---|
-| AuthService | AuthServiceTests | 9 | ~85% |
+| AuthService | AuthServiceTests + SeguridadJwtTests | 19 | ~85% |
 | CategoriasController | CategoriasControllerTests | 12 | ~90% |
 | MovimientosController | FiltrosPaginacionTests + MovimientosControllerTests | 27 | ~90% |
 | PresupuestosController | FiltrosPaginacionTests | 9 | ~60% |
+| Usuarios / Hogares / Tips | SeguridadAutorizacionTests (atributos y mass assignment) | 9 | atributos verificados |
+| Configuración / pipeline | SeguridadConfiguracionTests (archivos versionados) | 13 | 100% del arranque |
 | Performance (read/write) | PerformanceTests | 4 | N/A (SLA) |
 | Frontend App | — | pendiente | ~30% (reporte previo) |
 
@@ -218,16 +240,29 @@ requiere `-Movimientos 10000`.
 - **.NET SDK:** 10.0.302
 - **Runtime .NET:** 8.0.30
 - **Node.js:** no instalado (frontend pendiente)
-- **Docker:** Docker Desktop activo durante esta corrida (PostgreSQL 16 + API en `http://localhost:8080`)
+- **Docker:** Docker Desktop **no activo** el 27/09/2026 → la corrida de seguridad fue estática + xUnit (sin API en vivo). Docker Desktop sí estuvo activo en la corrida del 23/09/2026 (PostgreSQL 16 + API en `http://localhost:8080`)
 - **Bases de datos de pruebas:** EF Core InMemory (xUnit) + PostgreSQL 16 (suites de integración API)
+- **Código auditado:** snapshot del backend en rama `develop` (`backend-develop.zip`) extraído en `backend/`
 
 ## Hallazgos y acciones de esta corrida
 
 | # | Hallazgo | Tipo | Acción |
 |---|---|---|---|
+| SEC-01 | `Jwt:Key` hardcodeada y versionada en `appsettings.json` → se pueden firmar tokens `Admin` de cualquier hogar | Seguridad (**crítica**) | Reportado, sin corregir. Rotar la clave e inyectarla por entorno. `doc/qa/SEGURIDAD/issues/SEC-01-...md` |
+| SEC-02 | Contraseña de PostgreSQL en texto plano en `docker-compose.yml`, reutilizada por la API, con `5432:5432` publicado | Seguridad (**crítica**) | Reportado, sin corregir. Mover a `.env` no versionado y rotar. `doc/qa/SEGURIDAD/issues/SEC-02-...md` |
+| SEC-03 | Cero cabeceras de seguridad (sin `nosniff`, CSP, `X-Frame-Options`, `Referrer-Policy`, HSTS) | Seguridad (alta) | Reportado. Middleware de cabeceras en `Program.cs`. `SEC-03-...md` |
+| SEC-04 | Sin rate limiting ni bloqueo de cuenta en `/api/Auth/login` y `/register` (contraseñas de 6 caracteres) | Seguridad (alta) | Reportado. `AddRateLimiter` + bloqueo por intentos fallidos. `SEC-04-...md` |
+| SEC-05 | Texto libre persistido sin sanear (riesgo de XSS almacenado en el frontend) y `EducacionFinanciera.Contenido` sin límite de longitud | Seguridad (media) | Reportado. Coordinar con frontend: nunca `dangerouslySetInnerHTML` + CSP. `SEC-05-...md` |
+| SEC-06 | `Rol` es texto libre sin lista blanca (`SuperAdmin`, `admin`…) | Seguridad (media) | Reportado. Enum/mapa de dominio (mismo patrón que BUG-03). `SEC-06-...md` |
+| SEC-07 | JWT sin `jti`/revocación/refresh y `ClockSkew` de 5 min por defecto → cambios de rol no surten efecto hasta 8 h | Seguridad (media) | Reportado. `jti` + denylist y vida corta + refresh. `SEC-07-...md` |
+| SEC-08 | Compose con `ASPNETCORE_ENVIRONMENT=Development` → Swagger UI y stack traces expuestos | Seguridad (media) | Reportado. Default `Production` + flag explícito para Swagger. `SEC-08-...md` |
+| SEC-09 | API en `http://+:8080` y BD en `5432:5432` sin TLS, con `UseHttpsRedirection()` inoperante | Seguridad (media) | Documentado. TLS en el proxy/ingress; puertos atados a loopback en local. `SEC-09-...md` |
+| SEC-10 | CI sin escaneo de secretos ni `dotnet test`, `AllowedHosts: "*"`, validación de modelo desactivada | Seguridad (baja) | Reportado. Gitleaks + `dotnet test` en el workflow. `SEC-10-...md` |
 | BUG-05-01 | `GET /api/Presupuestos?anio=&mes=` → 500 `integer out of range` en PostgreSQL si existe un `MesAnio=0001-01-01` (`-infinity`) | Bug (solo PostgreSQL) | **Corregido** en `Controllers/PresupuestosController.cs` (filtro por rango UTC). Issue: `doc/qa/HU05/issues/BUG-05-01-...md` |
 | PS (scripts QA) | `@($body | ConvertFrom-Json)` anida el array un nivel en PowerShell 5.1 | Bug de script | Corregido en los 3 scripts (HU-05, FP, PERF): re-emisión con `ForEach-Object { $_ }` |
 | PS (script PERF) | `$body = $r.Body` pisaba el parámetro `$Body` (case-insensitive) → lanzaba ProtocolViolation en GET | Bug de script | Corregido: variable local renombrada a `$respBody` |
-| CONFIRMAR-CON-EQUIPO | HU-01: BUG-01 (claim `role` corto en JWT) y BUG-02 (`PUT /api/Hogares` sin restricción Admin) | Bugs abiertos | Pendientes de decisión del equipo (`doc/qa/HU01/issues/`) |
+| PS (script seguridad) | `Tee-Object` en PowerShell 5.1 escribe el log en UTF-16 (git lo trataba como binario) y la salida de `dotnet` llegaba con las rutas absolutas del equipo | Bug de script | `Generar_Resultados_Seguridad.ps1` redirige la consola a archivo, la relee como UTF-8, sustituye `<repo>`/`<user>` y filtra el ruido de MSB3277; genera CSV/JSON |
+| CONFIRMAR-CON-EQUIPO | HU-01: BUG-01 (claim `role` corto en JWT) y BUG-02 (`PUT /api/Hogares` sin restricción Admin) | Bugs abiertos | Pendientes de decisión del equipo (`doc/qa/HU01/issues/`); BUG-01 solapa con SEC-07 |
 | CONFIRMAR-CON-EQUIPO | HU-05: permisos de Miembro, `MontoLimite<=0`, `MesAnio` opcional, unicidad categoría+mes | Comportamiento real | Revisar criterios de aceptación (CP-06, CP-10..13, CP-24) |
 | CONFIRMAR-CON-EQUIPO | Backend sin paginación en ningún listado | Faltante documentado | Definir si es defecto o *works as designed* para el MVP |
+| NO VERIFICADO | Frontend (render de texto, CSP, almacenamiento del token) y API en vivo (cabeceras reales, cuerpo de error 500, rate limit) | Alcance | Requiere repo `frontend` con Node y Docker Desktop activo; pasos concretos en `doc/qa/SEGURIDAD/issues/` |

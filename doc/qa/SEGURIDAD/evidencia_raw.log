@@ -1,0 +1,10 @@
+﻿  Determinando los proyectos que se van a restaurar...
+  Todos los proyectos están actualizados para la restauración.
+  RemesaSmartSV -> <repo>\backend\bin\Debug\net8.0\RemesaSmartSV.dll
+  backend.Tests -> <repo>\backend.Tests\bin\Debug\net8.0\backend.Tests.dll
+Serie de pruebas para <repo>\backend.Tests\bin\Debug\net8.0\backend.Tests.dll (.NETCoreApp,Version=v8.0)
+1 archivos de prueba en total coincidieron con el patrón especificado.
+ADVERTENCIA: Se sobrescribirá el archivo de resultados: <user>\AppData\Local\Temp\seguridad-trx\seguridad.trx
+Archivo de resultados: <user>\AppData\Local\Temp\seguridad-trx\seguridad.trx
+
+Correctas! - Con error:     0, Superado:    94, Omitido:     0, Total:    94, Duración: 5 s - backend.Tests.dll (net8.0)
