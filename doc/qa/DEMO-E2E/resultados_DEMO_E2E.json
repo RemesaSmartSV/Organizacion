@@ -24,16 +24,16 @@
         "Esperado":  "200 LoginResponse",
         "Obtenido":  200,
         "Resultado":  "PASO",
-        "Observaciones":  "Rol=Admin IdHogar=3 IdUsuario=5"
+        "Observaciones":  "Rol=Admin IdHogar=4 IdUsuario=7"
     },
     {
         "Paso":  "2. Registro",
         "ID":  "CP-D04",
         "Descripcion":  "El hogar quedo creado sin llamada adicional",
-        "Esperado":  "IdHogar=3 con tildes intactos",
+        "Esperado":  "IdHogar=4 con tildes intactos",
         "Obtenido":  200,
         "Resultado":  "PASO",
-        "Observaciones":  "{\"idHogar\":3,\"nombreFamiliar\":\"Familia López Demo\",\"fechaCreacion\":\"2026-09-27T18:36:40.5312520Z\"}"
+        "Observaciones":  "{\"idHogar\":4,\"nombreFamiliar\":\"Familia López Demo\",\"fechaCreacion\":\"2026-09-28T03:46:32.9956690Z\"}"
     },
     {
         "Paso":  "2. Registro",
@@ -96,7 +96,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "idUsuario=6 con tildes intactas"
+        "Observaciones":  "idUsuario=8 con tildes intactas"
     },
     {
         "Paso":  "3. Miembro",
@@ -111,7 +111,7 @@
         "Paso":  "3. Miembro",
         "ID":  "CP-D13",
         "Descripcion":  "El miembro pertenece al mismo hogar que el Admin",
-        "Esperado":  "IdHogar=3",
+        "Esperado":  "IdHogar=4",
         "Obtenido":  200,
         "Resultado":  "PASO",
         "Observaciones":  ""
@@ -123,7 +123,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "idCategoria=5"
+        "Observaciones":  "idCategoria=7"
     },
     {
         "Paso":  "4. Remesa",
@@ -132,7 +132,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "idMovimiento=7"
+        "Observaciones":  "idMovimiento=10"
     },
     {
         "Paso":  "4. Remesa",
@@ -159,7 +159,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "idCategoria=6"
+        "Observaciones":  "idCategoria=8"
     },
     {
         "Paso":  "5. Gasto",
@@ -168,7 +168,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "idMovimiento=8"
+        "Observaciones":  "idMovimiento=11"
     },
     {
         "Paso":  "6. Tablero",
@@ -204,7 +204,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "idPresupuesto=3 mesAnio=2026-09-01"
+        "Observaciones":  "idPresupuesto=4 mesAnio=2026-09-01"
     },
     {
         "Paso":  "7. Presupuesto",
@@ -267,7 +267,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "idMeta=3 fechaLimite=2027-03-27"
+        "Observaciones":  "idMeta=4 fechaLimite=2027-03-28"
     },
     {
         "Paso":  "9. Meta",
@@ -285,7 +285,7 @@
         "Esperado":  "201 Created",
         "Obtenido":  201,
         "Resultado":  "PASO",
-        "Observaciones":  "{\"idAporte\":5,\"idMeta\":3,\"monto\":300,\"fecha\":\"2026-09-27T00:00:00.0000000Z\"}"
+        "Observaciones":  "{\"idAporte\":7,\"idMeta\":4,\"monto\":300,\"fecha\":\"2026-09-28T00:00:00.0000000Z\"}"
     },
     {
         "Paso":  "9. Meta",
