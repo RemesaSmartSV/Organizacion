@@ -1,0 +1,660 @@
+﻿[
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.LoginAsync_ConContrasenaIncorrecta_DevuelveNull",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.7689462"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.LoginAsync_ConCorreoEnMinusculasYRegistroEnMayusculas_Autentica",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2436894"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.LoginAsync_ConCorreoInexistente_DevuelveNull",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0011673"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.LoginAsync_ConCredencialesCorrectas_DevuelveToken",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2100627"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.RegisterAsync_AsignaContrasenaHasheadaNoPlana",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.1371606"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.RegisterAsync_ConCorreoDuplicado_NoCreaHogarNiUsuario",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0168417"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.RegisterAsync_ConCorreoDuplicado_SinDiferenciarMayusculas_DevuelveNull",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0019566"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.RegisterAsync_ConNuevoCorreo_RegistraHogarYUsuarioAdmin",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.1559024"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.AuthServiceTests.RegisterAsync_DevuelveTokenJwtValidoConClaims",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.1298606"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Create_AsignaHogarDelUsuarioYPersiste",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0031237"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Create_IgnoraIdCategoriaProporcionado",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0037957"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Delete_DeMismoHogar_EliminaYDevuelveNoContent",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0165356"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Delete_DeOtroHogar_NoEliminaYDevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0022704"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Delete_Inexistente_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0013189"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.GetCategoria_DeMismoHogar_DevuelveCategoria",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0057298"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.GetCategoria_DeOtroHogar_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0024728"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.GetCategoria_Inexistente_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0022968"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.GetCategorias_SoloDevuelveCategoriasDelHogarOrdenadasPorNombre",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0309341"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Update_DeMismoHogar_ActualizaCamposYDevuelveNoContent",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0046726"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Update_DeOtroHogar_NoModificaYDevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0118307"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.CategoriasControllerTests.Update_Inexistente_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0014400"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetMovimientos_CienRegistros_SinPaginacionDevuelveTodos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0049024"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetMovimientos_FiltroCategoriaInexistente_DevuelveVacio",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0018858"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetMovimientos_FiltroCombinadoCategoriaYTipo_DevuelveSoloLaInterseccion",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0094277"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetMovimientos_FiltroTipoConEspacios_SeIgnoraYDevuelveTodos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0020282"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetPresupuestos_CincuentaRegistros_SinPaginacionDevuelveTodos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0064515"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetPresupuestos_FiltroAnioYMes_DevuelveSoloElMesSolicitado",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0064360"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetPresupuestos_FiltroSinCoincidencias_DevuelveVacio",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0015259"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetPresupuestos_FiltroSoloAnio_SinMesSeIgnoraYDevuelveTodos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0022743"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.FiltrosPaginacionTests.GetPresupuestos_FiltroSoloMes_SinAnioSeIgnoraYDevuelveTodos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0246388"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Create_ConCategoriaDelHogar_AsignaHogarYUsuarioYPersiste",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0181279"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Create_ConCategoriaDeOtroHogar_DevuelveBadRequestYNoPersiste",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0018637"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Create_ConCategoriaInexistente_DevuelveBadRequestYNoPersiste",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0011758"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Delete_DeMismoHogar_EliminaYDevuelveNoContent",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0155883"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Delete_DeOtroHogar_NoEliminaYDevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.1229756"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Delete_Inexistente_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0011171"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.GetMovimiento_DeMismoHogar_DevuelveMovimiento",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0038847"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.GetMovimiento_DeOtroHogar_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0013301"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.GetMovimiento_Inexistente_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0012653"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.GetMovimientos_ConFiltroCategoriaId_SoloDevuelveDeEsaCategoria",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0160970"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.GetMovimientos_ConFiltroTipo_SoloDevuelveDeEseTipo",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0016752"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.GetMovimientos_ConFiltroTipoEnMinusculas_DevuelveVacio",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0245956"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.GetMovimientos_SinFiltros_DevuelveDelHogarOrdenadosPorFechaDescendente",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0079954"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Update_CambioACategoriaDeOtroHogar_DevuelveBadRequestYNoCambia",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0469436"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Update_CambioACategoriaValidaDelHogar_ActualizaIdCategoria",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0130261"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Update_DeMismoHogar_ActualizaCamposYDevuelveNoContent",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0055968"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Update_DeOtroHogar_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0020634"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.MovimientosControllerTests.Update_Inexistente_DevuelveNotFound",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0014762"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.PerformanceTests.Create_MilMovimientosSecuenciales_TardaMenosDeDiezSegundos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:02.8671274"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.PerformanceTests.GetMovimientos_ConDosMilRegistros_RespondeEnMenosDeCincoSegundos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0246427"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.PerformanceTests.GetMovimientos_ConFiltroYDiezMilRegistros_RespondeEnMenosDeCincoSegundos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.9431658"
+    },
+    {
+        "Suite":  "QA previa",
+        "Ambito":  "Suite funcional previa",
+        "Caso":  "backend.Tests.PerformanceTests.GetPresupuestos_ConDosMilRegistros_RespondeEnMenosDeCincoSegundos",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0191815"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Autorizacion_ElHogarYElUsuarioDeUnMovimientoSeTomanDelTokenYNoDelCuerpo",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0025174"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Autorizacion_LasOperacionesCriticasDeUsuariosTipsYHogaresExigenRolAdmin",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0037815"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Autorizacion_LosEndpointsPublicosSonSoloLosDelLoginYRegistroYLosTipsDeLectura",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0030793"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Autorizacion_NingunEndpointQuedaAnonimoPorHerenciaOErrorDeOmision",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0165050"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Autorizacion_TodoControllerSinAuthorizeDeClaseExponeSoloEndpointsDeclaradosDeFormaExplicita",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0051592"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Autorizacion_UnaCategoriaNoPuedeCrearseEnElHogarDeOtroUsuarioAunqueVengaEnElCuerpo",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0017896"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Autorizacion_UnMiembroNoCumpleElAtributoAdminParaCrearUsuarios",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0035814"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Vuln_SEC06_AddMemberAceptaElRolIndicadoSinValidarContraLaListaAdminMiembro",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.1371043"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "CSRF / Autorizacion / IDOR",
+        "Caso":  "backend.Tests.SeguridadAutorizacionTests.Vuln_SEC06_UpdateUsuarioPersisteUnRolFueraDeLaListaAdminMiembro",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.1517469"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Configuracion_CorsSoloPermiteElOrigenDelFrontendSinWildcardNiCredenciales",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0006053"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Configuracion_ElAccesoADatosUsaEFCoreConConsultasParametrizadas",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0068530"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Configuracion_LaApiUsaBearerYNoCookiesPorLoQueElCsrfNoEsExplotable",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0011669"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Configuracion_LaValidacionDelJwtExigeIssuerAudienceVigenciaYClaveDeFirma",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0011835"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Configuracion_LaValidacionOcurreAntesDeAutorizarYAntesDeMapearLosControllers",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0006733"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC01_LaClaveFirmanteDelJwtEstaEnTextoPlanoEnElAppsettingsVersionado",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0009001"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC02_LaContrasenaDePostgresEstaEnTextoPlanoEnElComposeYSeReutilizaEnLaApi",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0006988"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC03_NoHayNingunaCabeceraDeSeguridadConfiguradaEnElBackend",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0006726"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC04_NoHayLimiteDePeticionesNiBloqueoDeCuentaEnElLogin",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0015151"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC08_ElComposeArrancaLaApiEnDevelopmentExpuestoASwaggerYAlDetalleDeErrores",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0020657"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC09_ElContenedorSirveLaApiPorHttpSinTlsYLaBaseDeDatosQuedaExpuestaAlHost",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0015403"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC10_ElPipelineDeNoEscaneaSecretosYLaApiAceptaTodosLosHostHeader",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0022698"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Headers / Secretos / Pipeline",
+        "Caso":  "backend.Tests.SeguridadConfiguracionTests.Vuln_SEC10_LaValidacionDeModeloImplicitaEstaDesactivadaEnLosControllers",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0006400"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Contrasenas",
+        "Caso":  "backend.Tests.SeguridadContrasenasTests.ContrasenaHash_DosUsuariosConLaMismaClaveTienenHashesDistintosPorLaSal",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.6441044"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Contrasenas",
+        "Caso":  "backend.Tests.SeguridadContrasenasTests.ContrasenaHash_LaVerificacionRechazaLaClaveIncorrecta",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2745412"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Contrasenas",
+        "Caso":  "backend.Tests.SeguridadContrasenasTests.ContrasenaHash_NuncaSeSerializaEnLasRespuestasJsonDeLaApi",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.1134340"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Contrasenas",
+        "Caso":  "backend.Tests.SeguridadContrasenasTests.ContrasenaHash_UsaPbkdf2ConSalYNoContieneLaClaveEnClaro",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0881879"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Contrasenas",
+        "Caso":  "backend.Tests.SeguridadContrasenasTests.LoginResponse_NoExponeLaContrasenaNiElHashEnNingunCampo",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2611412"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_AlterarElRolYRefirmarConOtraClaveLanzaSecurityTokenException",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2795498"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_ConAudienceDistintaEsRechazado",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0008491"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_ConIssuerDistintoEsRechazado",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0082418"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_ElRolDelTokenEsElQueAutorizaLasOperacionesRestringidas",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2703947"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_EmitidoPorLogin_PasaLaValidacionConIssuerAudienceVigenciaYFirmaCorrectas",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2453073"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_FirmadoConUnaClaveDistintaEsRechazadoComoTokenFalsificado",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0872897"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_LaVigenciaEsDeOchoHorasYNoMas",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.7453037"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_NoIncluyeClaimJtiPorLoQueNoSePuedeRevocarUnTokenIndividualmente",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.2310760"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Jwt_VencidoEsRechazado",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0030864"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "Tokens JWT",
+        "Caso":  "backend.Tests.SeguridadJwtTests.Vuln_SEC07_UnTokenVencidoHaceMenosDeCincoMinutosTodaviaSeAceptaPorElClockSkewPorDefecto",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0006688"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "XSS",
+        "Caso":  "backend.Tests.SeguridadXssTests.Vuln_SEC05_ElContenidoDeLosTipsNoTieneLimiteDeLongitudNiValidacionDeContenido",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0004851"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "XSS",
+        "Caso":  "backend.Tests.SeguridadXssTests.Xss_ElSerializadorJsonDeLaApiEscapaLosCaracteresHtmlDeLosCamposDeTexto",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0236422"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "XSS",
+        "Caso":  "backend.Tests.SeguridadXssTests.Xss_LaDescripcionYElOrigenDeUnMovimientoSeGuardanYSeDevuelvenSinTransformar",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0032337"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "XSS",
+        "Caso":  "backend.Tests.SeguridadXssTests.Xss_LosCamposDeTextoConLengthLimitanLoQueSePuedePersistirEnElPayload",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0040091"
+    },
+    {
+        "Suite":  "Seguridad",
+        "Ambito":  "XSS",
+        "Caso":  "backend.Tests.SeguridadXssTests.Xss_LosTipsSeDevuelvenComoDatosJsonYElBackendNoGeneraHtml",
+        "Resultado":  "PASS",
+        "Duracion":  "00:00:00.0226576"
+    }
+]

@@ -1,0 +1,362 @@
+﻿[
+    {
+        "Paso":  "1. Despliegue",
+        "ID":  "CP-D01",
+        "Descripcion":  "API levantada y respondiendo en :8080",
+        "Esperado":  "200",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "1. Despliegue",
+        "ID":  "CP-D02",
+        "Descripcion":  "Contenido de Educacion Financiera listo al arrancar",
+        "Esperado":  "\u003e=1 tip sembrado",
+        "Obtenido":  "0 tip(s)",
+        "Resultado":  "FALLO",
+        "Observaciones":  "BLOQUEANTE del paso 10: la migracion InitialCreate no inserta ninguna fila y GET es publico, asi que en una base limpia la seccion sale vacia sin un alta manual previa."
+    },
+    {
+        "Paso":  "2. Registro",
+        "ID":  "CP-D03",
+        "Descripcion":  "Registro devuelve 200 con Token, IdHogar y Rol",
+        "Esperado":  "200 LoginResponse",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "Rol=Admin IdHogar=4 IdUsuario=7"
+    },
+    {
+        "Paso":  "2. Registro",
+        "ID":  "CP-D04",
+        "Descripcion":  "El hogar quedo creado sin llamada adicional",
+        "Esperado":  "IdHogar=4 con tildes intactos",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"idHogar\":4,\"nombreFamiliar\":\"Familia López Demo\",\"fechaCreacion\":\"2026-09-28T03:46:32.9956690Z\"}"
+    },
+    {
+        "Paso":  "2. Registro",
+        "ID":  "CP-D05",
+        "Descripcion":  "El hogar nace con un unico usuario Admin",
+        "Esperado":  "1 miembro con Rol=Admin",
+        "Obtenido":  "1 miembro(s), Rol=Admin",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "2. Registro",
+        "ID":  "CP-D06",
+        "Descripcion":  "El hash de la contrasena no se expone en la respuesta",
+        "Esperado":  "sin ContrasenaHash",
+        "Obtenido":  "ausente",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "2b. Login",
+        "ID":  "CP-D07",
+        "Descripcion":  "Login con las credenciales recien creadas",
+        "Esperado":  "200 con Token",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "2b. Login",
+        "ID":  "CP-D08",
+        "Descripcion":  "El JWT incluye el claim corto \"role\" que promete el guion",
+        "Esperado":  "role=Admin",
+        "Obtenido":  "http://schemas.microsoft.com/ws/2008/06/identity/claims/role=Admin",
+        "Resultado":  "FALLO",
+        "Observaciones":  "CONFIRMA BUG-01 (HU-01). Decodificar el token con jwt-decode devuelve payload.role = undefined, asi que cualquier UI que lea el rol del token (ocultar opciones de Admin, etc.) no funciona. Requiere coordinar el nombre del claim con el frontend."
+    },
+    {
+        "Paso":  "2b. Login",
+        "ID":  "CP-D09",
+        "Descripcion":  "El token vence a las 8 horas de emitirse",
+        "Esperado":  "exp - iat = 28800 s (exactamente 8 h)",
+        "Obtenido":  "28800 s restantes",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "2b. Login",
+        "ID":  "CP-D10",
+        "Descripcion":  "El JWT incluye \"iat\" (fecha de emision)",
+        "Esperado":  "iat presente",
+        "Obtenido":  "ausente",
+        "Resultado":  "FALLO",
+        "Observaciones":  "CONFIRMA BUG-01 (HU-01). Sin iat el frontend no puede calcular cuando expira la sesion salvo restando 8 h a exp, y la auditoria de trazas no puede correlacionar."
+    },
+    {
+        "Paso":  "3. Miembro",
+        "ID":  "CP-D11",
+        "Descripcion":  "Alta de miembro con rol Miembro (Admin)",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idUsuario=8 con tildes intactas"
+    },
+    {
+        "Paso":  "3. Miembro",
+        "ID":  "CP-D12",
+        "Descripcion":  "El miembro puede iniciar sesion",
+        "Esperado":  "200 con Token",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "3. Miembro",
+        "ID":  "CP-D13",
+        "Descripcion":  "El miembro pertenece al mismo hogar que el Admin",
+        "Esperado":  "IdHogar=4",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "4. Remesa",
+        "ID":  "CP-D14",
+        "Descripcion":  "Categoria de remesa creada",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idCategoria=7"
+    },
+    {
+        "Paso":  "4. Remesa",
+        "ID":  "CP-D15",
+        "Descripcion":  "Remesa de $400 registrada",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idMovimiento=10"
+    },
+    {
+        "Paso":  "4. Remesa",
+        "ID":  "CP-D16",
+        "Descripcion":  "La entidad emisora se guarda y se devuelve intacta (UTF-8)",
+        "Esperado":  "origenEmisora=\u0027Tío Carlos - Los Ángeles\u0027",
+        "Obtenido":  "\u0027Tío Carlos - Los Ángeles\u0027",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "4. Remesa",
+        "ID":  "CP-D17",
+        "Descripcion":  "Una remesa no se puede registrar con Tipo=Gasto por error de captura",
+        "Esperado":  "rechazo (400) o marca de remesa",
+        "Obtenido":  "ACEPTADA: 204 y ahora Tipo=Gasto",
+        "Resultado":  "PASO",
+        "Observaciones":  "Tipo es texto libre de 20 chars sin lista blanca (mismo patron que BUG-03): la API acepta una remesa de $400 clasificada como Gasto. En la demo el taller de educacion financiera no puede marcar el remesador como tipo \"Ingreso\", y nada impide que un ingreso quede como Gasto y rompa el tablero."
+    },
+    {
+        "Paso":  "5. Gasto",
+        "ID":  "CP-D18",
+        "Descripcion":  "Categoria de alimentacion creada",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idCategoria=8"
+    },
+    {
+        "Paso":  "5. Gasto",
+        "ID":  "CP-D19",
+        "Descripcion":  "Gasto de alimentacion de $120",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idMovimiento=11"
+    },
+    {
+        "Paso":  "6. Tablero",
+        "ID":  "CP-D20",
+        "Descripcion":  "Ingresos, gastos y saldo son derivables de los movimientos",
+        "Esperado":  "ingresos=400 gastos=120 saldo=280",
+        "Obtenido":  "ingresos=400.00 gastos=120.00 saldo=280.00",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "6. Tablero",
+        "ID":  "CP-D21",
+        "Descripcion":  "Los montos llegan con 2 decimales exactos (sin error de redondeo)",
+        "Esperado":  "400.00 y 120.00 exactos",
+        "Obtenido":  "400.00 / 120.00",
+        "Resultado":  "PASO",
+        "Observaciones":  "Sustenta la promesa del guion (seccion 5.2) de decimal(10,2) y nunca punto flotante."
+    },
+    {
+        "Paso":  "6. Tablero",
+        "ID":  "CP-D22",
+        "Descripcion":  "La API distingue la remesa de un ingreso comun",
+        "Esperado":  "campo o filtro de remesas en la respuesta",
+        "Obtenido":  "solo origenEmisora en 1 movimiento(s), sin flag ni filtro propio",
+        "Resultado":  "FALLO",
+        "Observaciones":  "La tarjeta violeta de remesas y la vista exclusiva de remesas que promete el guion dependen de que el frontend infiera \"es remesa\" de que origenEmisora no venga vacio. No hay campo esRemesa ni filtro ?remesas=true: es una convencion, no un contrato."
+    },
+    {
+        "Paso":  "7. Presupuesto",
+        "ID":  "CP-D23",
+        "Descripcion":  "Presupuesto de $300 en alimentacion para el mes actual",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idPresupuesto=4 mesAnio=2026-09-01"
+    },
+    {
+        "Paso":  "7. Presupuesto",
+        "ID":  "CP-D24",
+        "Descripcion":  "La barra de progreso llega a 40% consumido",
+        "Esperado":  "40% ($120 de $300)",
+        "Obtenido":  "40%",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "7. Presupuesto",
+        "ID":  "CP-D25",
+        "Descripcion":  "La API entrega el consumo del presupuesto (montoGastado / porcentaje)",
+        "Esperado":  "campo de consumo o porcentaje en la respuesta",
+        "Obtenido":  "solo: idPresupuesto,idHogar,idCategoria,montoLimite,mesAnio",
+        "Resultado":  "FALLO",
+        "Observaciones":  "La entidad Presupuesto solo tiene montoLimite y mesAnio. El 40%, el color de la barra y el cambio a rojo los tiene que calcular el frontend cruzando /api/Movimientos. Si el frontend no lo hace, el paso 7 no tiene barra que mostrar."
+    },
+    {
+        "Paso":  "7. Presupuesto",
+        "ID":  "CP-D26",
+        "Descripcion":  "Filtro de presupuestos por anio y mes contra PostgreSQL real",
+        "Esperado":  "200 con 1 presupuesto (2026-9)",
+        "Obtenido":  200,
+        "Resultado":  "PASO",
+        "Observaciones":  "1 presupuesto para 2026-9"
+    },
+    {
+        "Paso":  "8. Alerta",
+        "ID":  "CP-D27",
+        "Descripcion":  "Segundo gasto de $200 en alimentacion",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "8. Alerta",
+        "ID":  "CP-D28",
+        "Descripcion":  "El consumo acumulado supera el limite del presupuesto",
+        "Esperado":  "gasto=320 \u003e limite=300 -\u003e 106.67%",
+        "Obtenido":  "gasto=320.00 -\u003e 106.67%",
+        "Resultado":  "PASO",
+        "Observaciones":  "MOMENTO CLAVE DE LA DEMO (el guion pide hacer pausa aqui). El exceso se detecta bien en los datos."
+    },
+    {
+        "Paso":  "8. Alerta",
+        "ID":  "CP-D29",
+        "Descripcion":  "La API entrega la alerta de presupuesto excedido",
+        "Esperado":  "campo o endpoint de alerta de exceso",
+        "Obtenido":  "ninguno: la respuesta es el presupuesto tal cual",
+        "Resultado":  "FALLO",
+        "Observaciones":  "El paso 8 del guion dice \"aparece la alerta\" y lo presenta como el momento fuerte. Hoy no existe ningun soporte en la API: no hay campo, endpoint, ni codigo HTTP que indique el exceso. Todo depende de que el frontend lo detecte; si no lo hace, el paso mas importante de la demo se cae en silencio."
+    },
+    {
+        "Paso":  "9. Meta",
+        "ID":  "CP-D30",
+        "Descripcion":  "Meta de ahorro de $2,000 a 6 meses",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "idMeta=4 fechaLimite=2027-03-28"
+    },
+    {
+        "Paso":  "9. Meta",
+        "ID":  "CP-D31",
+        "Descripcion":  "La meta nace en 0 y en estado \"En progreso\"",
+        "Esperado":  "montoActual=0, Estado=\"En progreso\"",
+        "Obtenido":  "montoActual=0, Estado=\u0027En progreso\u0027",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "9. Meta",
+        "ID":  "CP-D32",
+        "Descripcion":  "Aporte de $300 a la meta",
+        "Esperado":  "201 Created",
+        "Obtenido":  201,
+        "Resultado":  "PASO",
+        "Observaciones":  "{\"idAporte\":7,\"idMeta\":4,\"monto\":300,\"fecha\":\"2026-09-28T00:00:00.0000000Z\"}"
+    },
+    {
+        "Paso":  "9. Meta",
+        "ID":  "CP-D33",
+        "Descripcion":  "El aporte actualiza solo el montoActual de la meta",
+        "Esperado":  "montoActual=300, Estado=\"En progreso\"",
+        "Obtenido":  "montoActual=300.00, Estado=\u0027En progreso\u0027",
+        "Resultado":  "PASO",
+        "Observaciones":  "Cumple la promesa del guion (seccion 3, Paso 3)."
+    },
+    {
+        "Paso":  "9. Meta",
+        "ID":  "CP-D34",
+        "Descripcion":  "La meta cambia de estado sola al alcanzar el objetivo",
+        "Esperado":  "montoActual=2000, Estado=\"Completada\"",
+        "Obtenido":  "montoActual=2000.00, Estado=\u0027Completada\u0027",
+        "Resultado":  "PASO",
+        "Observaciones":  ""
+    },
+    {
+        "Paso":  "9. Meta",
+        "ID":  "CP-D35",
+        "Descripcion":  "La API entrega \"lo que falta\" y el ritmo mensual sugerido",
+        "Esperado":  "campos de faltante y de aporte mensual",
+        "Obtenido":  "solo: idMeta,idHogar,titulo,montoObjetivo,montoActual,fechaLimite,estado (faltante=0.00 calculado a mano)",
+        "Resultado":  "FALLO",
+        "Observaciones":  "El guion promete que la app calcula el progreso, lo que falta y el ritmo mensual. La entidad no tiene ninguno de esos campos: el frontend tiene que derivarlos de montoObjetivo, montoActual y fechaLimite. En la demo, meta al 100% el faltante es 0 y el ritmo tendria queverse en 0."
+    },
+    {
+        "Paso":  "10. Tips",
+        "ID":  "CP-D36",
+        "Descripcion":  "La seccion de Educacion Financiera muestra tarjetas de tips",
+        "Esperado":  "200 con contenido",
+        "Obtenido":  "0 tip(s)",
+        "Resultado":  "FALLO",
+        "Observaciones":  "BLOQUEANTE del paso 10: con la base limpia el listado sale vacio porque la migracion no siembra ningun tip."
+    },
+    {
+        "Paso":  "10. Tips",
+        "ID":  "CP-D37",
+        "Descripcion":  "La API entrega el tip relacionado con la actividad de la familia",
+        "Esperado":  "tip recomendado por contexto",
+        "Obtenido":  "0 tip(s) y ningun endpoint de tip recomendado",
+        "Resultado":  "FALLO",
+        "Observaciones":  "GET /api/TipsFinancieros devuelve la tabla GLOBAL completa ordenada por Titulo, sin filtrar por hogar ni por actividad: no hay endpoint de \"tip recomendado\". Ademas EducacionFinanciera exige IdCategoria (FK a Categoria, que es por hogar), un acoplamiento raro para contenido global."
+    },
+    {
+        "Paso":  "11. Cierre de sesion",
+        "ID":  "CP-D38",
+        "Descripcion":  "El token queda invalidado tras el cierre de sesion",
+        "Esperado":  "401 despues del logout",
+        "Obtenido":  200,
+        "Resultado":  "FALLO",
+        "Observaciones":  "El logout solo borra localStorage: el JWT sigue aceptandose en la API hasta que pasan sus 8 h. La DEMO_GUIDE (paso 10) afirma que \"el token se invalida\" y no es cierto. Es el hallazgo ya documentado como SEC-07 (sin jti, sin revocacion)."
+    },
+    {
+        "Paso":  "11. Cierre de sesion",
+        "ID":  "CP-D39",
+        "Descripcion":  "La API responde con cabeceras de seguridad",
+        "Esperado":  "X-Content-Type-Options, HSTS, CSP",
+        "Obtenido":  "faltan las 4 (X-Content-Type-Options, X-Frame-Options, Strict-Transport-Security, Content-Security-Policy)",
+        "Resultado":  "FALLO",
+        "Observaciones":  "CONFIRMA SEC-03 en ejecucion real: la API responde sin ni una cabecera de seguridad."
+    },
+    {
+        "Paso":  "11. Cierre de sesion",
+        "ID":  "CP-D40",
+        "Descripcion":  "Swagger no deberia estar expuesto en el entorno de la demo",
+        "Esperado":  "404 o 403",
+        "Obtenido":  200,
+        "Resultado":  "FALLO",
+        "Observaciones":  "El compose arranca con ASPNETCORE_ENVIRONMENT=Development, asi que Swagger UI y el swagger.json quedan abiertos sin autenticacion en el puerto 8080. CONFIRMA SEC-08."
+    }
+]
