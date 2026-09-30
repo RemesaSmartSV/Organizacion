@@ -4,6 +4,10 @@
 **Proyecto:** RemesaSmartSV — Aplicación de finanzas familiares y remesas
 **Responsable:** Emelie López (documentación) / Branham Alabi (ejecución QA)
 
+> 📌 **Para la próxima iteración:** los 27 issues abiertos que dejan estas corridas, sus dependencias, las
+> 14 decisiones de comportamiento pendientes del equipo y la deuda de proceso que no tiene issue, están
+> consolidados y priorizados en [`doc/qa/BACKLOG-MVP3.md`](qa/BACKLOG-MVP3.md).
+
 ---
 
 ## Resumen General
